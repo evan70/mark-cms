@@ -32,10 +32,10 @@ class Article extends Model
 
     /**
      * Get translation for specific locale
+     * @return null
      */
     public function getTranslation(string $locale): ?ArticleTranslation
     {
-        $translation = $this->translations()->where('locale', $locale)->first();
-        return $translation instanceof ArticleTranslation ? $translation : null;
+        return null;
     }
 }

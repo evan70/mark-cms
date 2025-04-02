@@ -37,4 +37,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed type safety issues in `getTranslation` methods in Article and Tag models
 - Added proper variable checking in article-link component
 - Fixed navigation animation issue that caused the nav element to jump on page load
+- Updated `getTranslation` methods in Article and Tag models to always return null
 - Improved 500 error page styling to match the 404 page for consistency
