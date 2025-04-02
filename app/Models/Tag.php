@@ -33,7 +33,8 @@ class Tag extends Model
      */
     public function getTranslation(string $locale): ?TagTranslation
     {
-        return $this->translations()->where('locale', $locale)->first();
+        $translation = $this->translations()->where('locale', $locale)->first();
+        return $translation instanceof TagTranslation ? $translation : null;
     }
 
     /**

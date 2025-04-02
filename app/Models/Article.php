@@ -30,8 +30,12 @@ class Article extends Model
         return $this->belongsToMany(Category::class, 'article_categories');
     }
 
+    /**
+     * Get translation for specific locale
+     */
     public function getTranslation(string $locale): ?ArticleTranslation
     {
-        return $this->translations()->where('locale', $locale)->first();
+        $translation = $this->translations()->where('locale', $locale)->first();
+        return $translation instanceof ArticleTranslation ? $translation : null;
     }
 }

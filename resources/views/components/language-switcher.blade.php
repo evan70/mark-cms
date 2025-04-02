@@ -1,4 +1,5 @@
-<div class="relative language-switcher" x-data="{ open: false }">
+<div class="relative language-switcher"
+     x-data="{ open: false }">
     <!-- Current Language Button -->
     <button @click="open = !open"
             class="language-button flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-700 hover:bg-gray-600 transition-colors">
@@ -14,7 +15,7 @@
             <path stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M19 9l-7 7-7-7" />
+                  d="M19 9l-7 7-7-7"/>
         </svg>
     </button>
 
@@ -24,15 +25,15 @@
          class="language-dropdown absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-gray-700 ring-1 ring-black ring-opacity-5 z-50">
         <div class="py-1">
             @foreach(config('app.available_languages') as $code)
-                @if($code !== $lang)
-                    <a href="/{{ $code }}"
-                       class="language-option flex items-center space-x-3 px-4 py-2 text-sm text-gray-150 hover:bg-gray-600">
-                        <img src="{{ asset('images/flags/' . $code . '.svg') }}"
-                             alt="{{ strtoupper($code) }}"
-                             class="w-5 h-5">
-                        <span>{{ __('languages.' . $code) }}</span>
-                    </a>
-                @endif
+            @if($code !== $lang)
+            <a href="/{{ $code }}"
+               class="language-option flex items-center space-x-3 px-4 py-2 text-sm text-gray-150 hover:bg-gray-600">
+                <img src="{{ asset('images/flags/' . $code . '.svg') }}"
+                     alt="{{ strtoupper($code) }}"
+                     class="w-5 h-5">
+                <span>{{ __('languages.' . $code) }}</span>
+            </a>
+            @endif
             @endforeach
         </div>
     </div>

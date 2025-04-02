@@ -10,6 +10,14 @@
 --}}
 
 @php
+    // Check if required variables are provided
+    if (!isset($article)) {
+        throw new Exception('Article variable is required for article-link component');
+    }
+    if (!isset($language)) {
+        throw new Exception('Language variable is required for article-link component');
+    }
+
     // Ensure we have a translation
     $articleTranslation = $translation ?? $article->translations->first();
     $title = $articleTranslation->title ?? 'Article';

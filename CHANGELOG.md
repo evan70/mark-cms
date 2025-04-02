@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added meta keywords to all pages for better SEO
 - Created article-link component for consistent and accessible article links
 
+### Removed
+- Removed unused `IlluminateContainerAdapter` class
+
 ### Fixed
 - Accessibility: Added proper ARIA attributes to mobile menu button
   - Added `aria-label="Toggle mobile menu"` to provide a descriptive name for screen readers
@@ -31,4 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Accessibility: Added descriptive text to links
   - Added proper title and aria-label attributes to article links
   - Ensured all links have descriptive text for screen readers
+- Fixed type safety issues in `getTranslation` methods in Article and Tag models
+- Added proper variable checking in article-link component
 - Improved 500 error page styling to match the 404 page for consistency
