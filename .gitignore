@@ -1,1 +1,21 @@
-node_modules
+# Dependencies
+node_modules/
+vendor/
+
+# Storage
+storage/
+!storage/.gitkeep
+
+# Environment files
+.env
+.env.backup
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db

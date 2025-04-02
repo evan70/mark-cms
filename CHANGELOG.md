@@ -36,4 +36,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensured all links have descriptive text for screen readers
 - Fixed type safety issues in `getTranslation` methods in Article and Tag models
 - Added proper variable checking in article-link component
+- Fixed navigation animation issue that caused the nav element to jump on page load
 - Improved 500 error page styling to match the 404 page for consistency
