@@ -10,6 +10,10 @@ use App\Handlers\HttpErrorHandler;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
 // Create Container
 $container = new Container();
 
@@ -46,8 +50,19 @@ $middleware = require __DIR__ . '/../config/middleware.php';
 $middleware($app);
 
 // Register routes
-$routes = require __DIR__ . '/../routes/web.php';
-$routes($app);
+// Auth routes must be registered before web routes because web routes have a wildcard route
+$authRoutes = require __DIR__ . '/../routes/auth.php';
+$authRoutes($app);
+
+$markRoutes = require __DIR__ . '/../routes/mark.php';
+$markRoutes($app);
+
+$apiRoutes = require __DIR__ . '/../routes/api.php';
+$apiRoutes($app);
+
+// Web routes must be registered last because they have a wildcard route
+$webRoutes = require __DIR__ . '/../routes/web.php';
+$webRoutes($app);
 
 // Run app
 $app->run();

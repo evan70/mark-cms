@@ -10,7 +10,7 @@ Mark CMS je moderný, ľahký a flexibilný systém na správu obsahu (CMS) post
 - **Blade šablóny** - Intuitívny šablónovací systém z Laravel ekosystému
 - **SEO optimalizácia** - Integrované nástroje pre lepšiu viditeľnosť vo vyhľadávačoch
 - **Prístupnosť** - Implementované štandardy WCAG 2.1 pre lepšiu prístupnosť
-- **Admin rozhranie** - Jednoduché a intuitívne rozhranie pre správu obsahu
+- **Mark rozhranie** - Jednoduché a intuitívne rozhranie pre správu obsahu
 
 ## Požiadavky
 
@@ -69,6 +69,7 @@ Podrobná dokumentácia je dostupná v adresári `docs`:
 
 - [Architektúra](docs/ARCHITECTURE.md) - Detailný popis architektúry systému
 - [Prístupnosť](docs/ACCESSIBILITY.md) - Implementácia štandardov prístupnosti
+- [Autorizácia](docs/AUTHORIZATION.md) - Systém autorizácie a prístupových práv
 - [API](docs/API.md) - Dokumentácia REST API
 - [API Autentifikácia](docs/API_AUTHENTICATION.md) - Autentifikácia pre REST API
 - [Vývoj](docs/DEVELOPMENT.md) - Informácie pre vývojárov

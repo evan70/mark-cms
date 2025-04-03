@@ -6,14 +6,21 @@ class InitDatabase
 {
     public function up(): void
     {
-        // Admin Users
+        // Users
+        $this->createUsersSchema();
+        $this->createMarkUsersSchema();
+
+        // Admin Users (legacy)
         $this->createAdminSchema();
-        
+
         // Content Management
         $this->createLanguagesTable();
         $this->createCategoriesSchema();
         $this->createTagsSchema();
         $this->createArticlesSchema();
+
+        // Run seeders
+        $this->runSeeders();
     }
 
     private function createAdminSchema(): void
@@ -60,7 +67,7 @@ class InitDatabase
         });
     }
 
-    private function createLanguagesTable(): void 
+    private function createLanguagesTable(): void
     {
         Capsule::schema()->create('languages', function ($table) {
             $table->id();
@@ -71,7 +78,7 @@ class InitDatabase
         });
     }
 
-    private function createCategoriesSchema(): void 
+    private function createCategoriesSchema(): void
     {
         Capsule::schema()->create('categories', function ($table) {
             $table->id();
@@ -90,12 +97,12 @@ class InitDatabase
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['category_id', 'locale']);
         });
     }
 
-    private function createTagsSchema(): void 
+    private function createTagsSchema(): void
     {
         Capsule::schema()->create('tags', function ($table) {
             $table->id();
@@ -113,12 +120,12 @@ class InitDatabase
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['tag_id', 'locale']);
         });
     }
 
-    private function createArticlesSchema(): void 
+    private function createArticlesSchema(): void
     {
         Capsule::schema()->create('articles', function ($table) {
             $table->id();
@@ -140,7 +147,7 @@ class InitDatabase
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['article_id', 'locale']);
             $table->index('locale');
         });
@@ -150,7 +157,7 @@ class InitDatabase
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            
+
             $table->unique(['article_id', 'category_id']);
         });
 
@@ -159,9 +166,64 @@ class InitDatabase
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            
+
             $table->unique(['article_id', 'tag_id']);
         });
+    }
+
+    private function createUsersSchema(): void
+    {
+        Capsule::schema()->create('users', function ($table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->boolean('is_active')->default(true);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamp('last_login_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    private function createMarkUsersSchema(): void
+    {
+        Capsule::schema()->create('mark_users', function ($table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->enum('role', ['admin', 'editor', 'contributor'])->default('contributor');
+            $table->boolean('is_active')->default(true);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamp('last_login_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    private function runSeeders(): void
+    {
+        // Run seeders
+        $userSeeder = new \Database\Seeders\UserSeeder();
+        $userSeeder->run();
+
+        // Note: We don't need to run MarkUserSeeder because UserSeeder already creates mark_users
+        // $markUserSeeder = new \Database\Seeders\MarkUserSeeder();
+        // $markUserSeeder->run();
+
+        // Run legacy seeders (now with namespace)
+        $languagesSeeder = new \Database\Seeders\LanguagesSeeder();
+        $languagesSeeder->run();
+
+        $categoriesSeeder = new \Database\Seeders\CategoriesSeeder();
+        $categoriesSeeder->run();
+
+        $tagsSeeder = new \Database\Seeders\TagsSeeder();
+        $tagsSeeder->run();
+
+        $articlesSeeder = new \Database\Seeders\ArticlesSeeder();
+        $articlesSeeder->run();
     }
 
     public function down(): void
@@ -177,7 +239,11 @@ class InitDatabase
             'category_translations',
             'categories',
             'languages',
-            
+
+            // User tables
+            'mark_users',
+            'users',
+
             // Admin tables
             'admin_role_permissions',
             'admin_permissions',

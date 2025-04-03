@@ -16,7 +16,7 @@ class DashboardController extends AdminController
             'languages' => Language::where('is_active', true)->count(),
         ];
 
-        return $this->render($response, 'admin.dashboard', [
+        return $this->render($response, 'mark.dashboard', [
             'title' => 'Dashboard',
             'stats' => $stats
         ]);

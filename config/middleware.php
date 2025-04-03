@@ -11,11 +11,16 @@ use Slim\App;
 
 return function (App $app) {
     $container = $app->getContainer();
-    
-    $app->add(new SessionMiddleware());
+
+    // Add middleware in reverse order (last added = first executed)
     $app->add(new ViewMiddleware($container->get(BladeService::class)));
     $app->add(new LanguageMiddleware());
     $app->add(new StaticAssetsMiddleware());
+    $app->add($container->get(\App\Middleware\SkipCsrfMiddleware::class));
+    $app->add($container->get('csrf'));
+    // Session middleware must be added after CSRF middleware
+    // because CSRF middleware uses session
+    $app->add(new SessionMiddleware());
     // Add as one of the last middleware in the stack
     // but before error handling middleware
     $app->add(HtmlCompressorMiddleware::class);

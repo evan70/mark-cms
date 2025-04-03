@@ -6,8 +6,9 @@ require __DIR__ . '/../vendor/autoload.php';
 use DI\Container;
 use Symfony\Component\Console\Application;
 use App\Commands\MigrateCommand;
-use App\Commands\SeedCommand;
+use App\Commands\SeedCommand as OldSeedCommand;
 use App\Console\Commands\DatabaseInitCommand;
+use App\Console\Commands\SeedCommand;
 
 // Load environment variables
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
@@ -26,7 +27,8 @@ $application = new Application();
 
 // Register commands
 $application->add(new MigrateCommand());
-$application->add(new SeedCommand());
+$application->add(new OldSeedCommand());
 $application->add($container->get(DatabaseInitCommand::class));
+$application->add(new SeedCommand());
 
 $application->run();

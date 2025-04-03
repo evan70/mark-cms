@@ -40,4 +40,88 @@ return [
             $container->get(\App\Services\DatabaseInitializerService::class)
         );
     },
+
+    // Auth Services
+    \App\Services\Auth\AuthService::class => function (ContainerInterface $container) {
+        return new \App\Services\Auth\AuthService();
+    },
+
+    \App\Services\Auth\MarkAuthService::class => function (ContainerInterface $container) {
+        return new \App\Services\Auth\MarkAuthService();
+    },
+
+    // Auth Middleware
+    \App\Middleware\UserAuthMiddleware::class => function (ContainerInterface $container) {
+        return new \App\Middleware\UserAuthMiddleware(
+            $container->get(\App\Services\Auth\AuthService::class)
+        );
+    },
+
+    \App\Middleware\MarkAuthMiddleware::class => function (ContainerInterface $container) {
+        return new \App\Middleware\MarkAuthMiddleware(
+            $container->get(\App\Services\Auth\MarkAuthService::class)
+        );
+    },
+
+    // Auth Controllers
+    \App\Controllers\Auth\AuthController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Auth\AuthController($container);
+    },
+
+    \App\Controllers\Auth\MarkAuthController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Auth\MarkAuthController($container);
+    },
+
+    // CSRF Protection
+    'csrf' => function (ContainerInterface $container) {
+        $responseFactory = $container->get('response_factory');
+
+        // Use session storage
+        // Make sure session is started
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        // Create guard with minimal parameters
+        $guard = new \Slim\Csrf\Guard($responseFactory);
+
+        // Configure guard
+        // Only use methods that are available in the current version
+        if (method_exists($guard, 'setPersistentTokenMode')) {
+            $guard->setPersistentTokenMode(false);
+        }
+
+        return $guard;
+    },
+
+    // Response Factory
+    'response_factory' => function (ContainerInterface $container) {
+        return new \Slim\Psr7\Factory\ResponseFactory();
+    },
+
+    // Logger
+    'logger' => function (ContainerInterface $container) {
+        $logger = new \Monolog\Logger('app');
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler(__DIR__ . '/../logs/app.log', \Monolog\Logger::DEBUG));
+        return $logger;
+    },
+
+    // Skip CSRF Middleware
+    \App\Middleware\SkipCsrfMiddleware::class => function (ContainerInterface $container) {
+        return new \App\Middleware\SkipCsrfMiddleware();
+    },
+
+    // Console Commands
+    \App\Console\Commands\SeedCommand::class => function (ContainerInterface $container) {
+        return new \App\Console\Commands\SeedCommand();
+    },
+
+    // Admin Controllers
+    \App\Controllers\Admin\UserController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Admin\UserController();
+    },
+
+    \App\Controllers\Admin\MarkUserController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Admin\MarkUserController();
+    },
 ];

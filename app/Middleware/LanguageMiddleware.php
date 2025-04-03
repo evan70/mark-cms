@@ -11,11 +11,23 @@ class LanguageMiddleware
 {
     private $defaultLanguage;
     private $availableLanguages;
+    private $excludedPaths;
 
     public function __construct()
     {
         $this->defaultLanguage = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
         $this->availableLanguages = explode(',', $_ENV['AVAILABLE_LANGUAGES'] ?? 'sk,en,cs');
+        $this->excludedPaths = [
+            'mark',
+            'login',
+            'logout',
+            'register',
+            'api',
+            'css',
+            'js',
+            'images',
+            'fonts'
+        ];
     }
 
     public function __invoke(Request $request, RequestHandler $handler): ResponseInterface
@@ -25,6 +37,11 @@ class LanguageMiddleware
 
         // Get language from URL
         $lang = $pathParts[0] ?? '';
+
+        // Skip language handling for excluded paths
+        if (in_array($lang, $this->excludedPaths)) {
+            return $handler->handle($request);
+        }
 
         // If language code is invalid but exists, redirect to default
         if ($lang && !in_array($lang, $this->availableLanguages)) {

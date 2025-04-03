@@ -11,21 +11,21 @@ class ArticleController extends AdminController
     public function index(Request $request, Response $response): Response
     {
         $articles = Article::orderBy('created_at', 'desc')->paginate(20);
-        
-        return $this->render($response, 'admin.articles.index', [
+
+        return $this->render($response, 'mark.articles.index', [
             'articles' => $articles
         ]);
     }
 
     public function create(Request $request, Response $response): Response
     {
-        return $this->render($response, 'admin.articles.create');
+        return $this->render($response, 'mark.articles.create');
     }
 
     public function store(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
-        
+
         $article = Article::create([
             'title' => $data['title'],
             'slug' => $this->createSlug($data['title']),
@@ -36,7 +36,7 @@ class ArticleController extends AdminController
         ]);
 
         $this->flash('success', 'Article created successfully');
-        return $this->redirect($response, '/admin/articles/' . $article->id . '/edit');
+        return $this->redirect($response, '/mark/articles/' . $article->id . '/edit');
     }
 
     private function createSlug(string $title): string

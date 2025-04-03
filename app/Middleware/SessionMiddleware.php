@@ -12,7 +12,7 @@ class SessionMiddleware
         // Always start session with secure defaults
         session_start([
             'cookie_httponly' => true,
-            'cookie_secure' => $_ENV['APP_ENV'] === 'production',
+            'cookie_secure' => ($_ENV['APP_ENV'] ?? 'development') === 'production',
             'cookie_samesite' => 'Lax',
             'cookie_path' => '/',
             'cookie_domain' => $_ENV['SESSION_DOMAIN'] ?? '',

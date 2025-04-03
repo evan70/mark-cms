@@ -10,39 +10,39 @@ use Slim\Psr7\Response;
 class AdminAuthMiddleware
 {
     private array $publicPaths = [
-        '/admin/login'
+        '/mark/login'
     ];
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $uri = $request->getUri();
         $path = $uri->getPath();
-        
+
         // Skip auth check for public paths
         if (in_array($path, $this->publicPaths)) {
             return $handler->handle($request);
         }
 
         // Check if it's an API request
-        $isApiRequest = str_starts_with($path, '/api/admin');
-        
+        $isApiRequest = str_starts_with($path, '/api/mark');
+
         if ($isApiRequest) {
             return $this->handleApiAuth($request, $handler);
         }
-        
+
         return $this->handleWebAuth($request, $handler);
     }
 
     private function handleApiAuth(Request $request, RequestHandler $handler): Response
     {
         $token = $request->getHeaderLine('Authorization');
-        
+
         if (empty($token) || !str_starts_with($token, 'Bearer ')) {
             return $this->unauthorized();
         }
 
         $token = substr($token, 7);
-        
+
         // Find user by API token
         $user = AdminUser::where('api_token', $token)
             ->where('is_active', true)
@@ -59,13 +59,13 @@ class AdminAuthMiddleware
     private function handleWebAuth(Request $request, RequestHandler $handler): Response
     {
         $session = $request->getAttribute('session');
-        
+
         if (!isset($session['admin_user_id'])) {
             return $this->redirectToLogin();
         }
 
         $user = AdminUser::find($session['admin_user_id']);
-        
+
         if (!$user || !$user->is_active) {
             unset($session['admin_user_id']);
             $request = $request->withAttribute('session', $session);
@@ -86,7 +86,7 @@ class AdminAuthMiddleware
     {
         $response = new Response();
         return $response
-            ->withHeader('Location', '/admin/login')
+            ->withHeader('Location', '/mark/login')
             ->withStatus(302);
     }
 }

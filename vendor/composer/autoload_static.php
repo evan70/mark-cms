@@ -28,7 +28,6 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
     public static $prefixLengthsPsr4 = array (
         'v' => 
         array (
-            'voku\\helper\\' => 12,
             'voku\\' => 5,
         ),
         'S' => 
@@ -43,7 +42,6 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\String\\' => 25,
             'Symfony\\Component\\Finder\\' => 25,
-            'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Slim\\Psr7\\' => 10,
             'Slim\\Csrf\\' => 10,
@@ -95,6 +93,7 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Inflector\\' => 19,
+            'Database\\Seeders\\' => 17,
             'DI\\' => 3,
         ),
         'C' => 
@@ -113,14 +112,9 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
     );
 
     public static $prefixDirsPsr4 = array (
-        'voku\\helper\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/voku/simple_html_dom/src/voku/helper',
-        ),
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/html-min/src/voku',
-            1 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -161,10 +155,6 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
         'Symfony\\Component\\Finder\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
-        ),
-        'Symfony\\Component\\CssSelector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
         'Symfony\\Component\\Console\\' => 
         array (
@@ -290,6 +280,10 @@ class ComposerStaticInit0dfeebb7cccd56d5f73f0963e1e2b54e
         'Doctrine\\Inflector\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
+        ),
+        'Database\\Seeders\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database/seeders',
         ),
         'DI\\' => 
         array (

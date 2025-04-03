@@ -7,6 +7,61 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Zmeny v štruktúre projektu
+
+#### Pridané
+- Migrácia z `/admin` na `/mark` pre konzistentnú štruktúru projektu (2025-04-03)
+  - Zmenené všetky cesty z `/admin` na `/mark`
+  - Presunutié všetky šablóny z `admin/` do `mark/`
+  - Aktualizované všetky kontroléry a middleware
+  - Aktualizovaná dokumentácia
+
+#### Opravené
+- Opravená implementácia CSRF ochrany (2025-04-03)
+  - Pridaný ResponseFactory pre CSRF Guard
+  - Vytvorený SkipCsrfMiddleware pre preskočenie CSRF ochrany pre API cesty
+  - Aktualizovaná funkcia csrf_fields() pre generáciu CSRF polí
+  - Opravený problém s parametrom $storage v CSRF Guard
+  - Použité vlastné pole ako úložisko pre CSRF tokeny namiesto session
+- Opravený konflikt ciest (2025-04-03)
+  - Upravená cesta `/{lang}` na `/{lang:[a-z]{2}}` pre obmedzenie na dvojznakové jazykové kódy
+  - Odstránený konflikt s cestou `/login`
+  - Zmenené poradie načítavania ciest, aby autentifikačné cesty boli načítané pred wildcard cestou
+  - Odstránené duplicitné cesty pre `/mark/login`
+  - Presunutié cesty pre prihlásenie z `/mark/login` na `/login`
+  - Upravené presmerovanie na prihlasovací formulár
+  - Pridané presmerovanie z domovskej stránky na `/mark` pre prihlásených používateľov
+  - Upravený prihlasovací formulár pre rozlíšenie medzi bežnými používateľmi a mark_users
+  - Upravený AuthController pre spracovanie prihlásenia pre oba typy používateľov
+  - Upravený LanguageMiddleware, aby ignoroval určité cesty, ako napríklad `/mark`, `/login`, atď.
+  - Opravený MarkAuthController, aby správne dedil od BaseController
+  - Opravený AuthController, aby správne dedil od BaseController
+  - Pridané načítavanie premenných prostredia z .env súboru
+  - Odstránená závislosť na voku/html-min a nahradená jednoduchým HTML kompresorom
+  - Opravený BladeService, aby nepoužíval neexistujúcu metódu forceRecompile()
+  - Opravená funkcia csrf_fields(), aby nepoužívala neexistujúce metódy generateTokenName() a generateTokenValue()
+  - Opravená konfigurácia CSRF ochrany, aby používala minimálne parametre a dostupné settery
+- Upravená inicializačná migrácia (2025-04-03)
+  - Pridané tabuľky pre používateľov a mark_users
+  - Pridané spustenie seederov v rámci migrácie
+  - Presunutié všetky seedery do adresára database/seeders s namespace Database\Seeders
+- Pridaná konfigurácia loggera (2025-04-03)
+  - Pridaná definícia pre 'logger' v kontajneri
+  - Vytvorený adresár pre logy
+- Pridaný jednoduchý skript pre inicializáciu databázy (2025-04-03)
+  - Vytvorený skript bin/db-init pre jednoduché spustenie inicializačnej migrácie
+- Pridaná premenná APP_ENV do .env súboru pre správnu konfiguráciu session
+
+### Autorizácia
+
+#### Pridané
+- Implementovaný systém autorizácie pre bežných používateľov a mark_users (2025-04-03)
+  - Vytvorené modely `User` a `MarkUser`
+  - Vytvorené autentifikačné služby `AuthService` a `MarkAuthService`
+  - Vytvorené middleware `UserAuthMiddleware` a `MarkAuthMiddleware`
+  - Vytvorené kontroléry pre autentifikáciu a správu používateľov
+  - Vytvorené šablóny pre prihlasovanie a správu používateľov
+
 ## [0.2.0] - 2025-04-03
 
 ### Prístupnosť a SEO

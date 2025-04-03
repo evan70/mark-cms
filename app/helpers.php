@@ -9,16 +9,28 @@ if (!function_exists('app')) {
 }
 
 if (!function_exists('csrf_fields')) {
+    /**
+     * Generate CSRF fields for forms
+     *
+     * @return string HTML for CSRF fields
+     */
     function csrf_fields(): string
     {
-        $guard = app()->getContainer()->get(\Slim\Csrf\Guard::class);
+        $csrf = app()->getContainer()->get('csrf');
+        $nameKey = $csrf->getTokenNameKey();
+        $valueKey = $csrf->getTokenValueKey();
+
+        // Get existing token or create a new one
+        $name = $csrf->getTokenName() ?? '';
+        $value = $csrf->getTokenValue() ?? '';
+
         return sprintf(
             '<input type="hidden" name="%s" value="%s">' .
             '<input type="hidden" name="%s" value="%s">',
-            $guard->getTokenNameKey(),
-            $guard->getTokenName(),
-            $guard->getTokenValueKey(),
-            $guard->getTokenValue()
+            $nameKey,
+            $name,
+            $valueKey,
+            $value
         );
     }
 }
@@ -208,3 +220,5 @@ if (!function_exists('article_link')) {
         return $service->renderArticleLink($article, $language, $options);
     }
 }
+
+

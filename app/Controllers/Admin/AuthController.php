@@ -29,28 +29,28 @@ class AuthController extends AdminController
             if ($user && password_verify($password, $user->password)) {
                 $session = $request->getAttribute('session');
                 $session->set('admin_user_id', $user->id);
-                
+
                 // Update last login
                 $user->update(['last_login_at' => now()]);
-                
-                return $this->redirect($response, '/admin');
+
+                return $this->redirect($response, '/mark');
             }
 
-            return $this->render($response, 'admin.auth.login', [
+            return $this->render($response, 'mark.auth.login', [
                 'error' => 'Invalid email or password'
             ]);
         }
 
-        return $this->render($response, 'admin.auth.login');
+        return $this->render($response, 'mark.auth.login');
     }
 
     public function logout(Request $request, Response $response): Response
     {
         $session = $request->getAttribute('session');
         $session->delete('admin_user_id');
-        
+
         return $response
-            ->withHeader('Location', '/admin/login')
+            ->withHeader('Location', '/mark/login')
             ->withStatus(302);
     }
 }

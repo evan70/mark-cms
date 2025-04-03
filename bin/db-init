@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// Initialize database connection
+$capsule = new Illuminate\Database\Capsule\Manager;
+$capsule->addConnection([
+    'driver'    => $_ENV['DB_DRIVER'] ?? 'sqlite',
+    'host'      => $_ENV['DB_HOST'] ?? 'localhost',
+    'database'  => $_ENV['DB_DATABASE'] ?? __DIR__ . '/../database/database.sqlite',
+    'username'  => $_ENV['DB_USERNAME'] ?? '',
+    'password'  => $_ENV['DB_PASSWORD'] ?? '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+echo "Initializing database...\n";
+
+// Include migration file
+require_once __DIR__ . '/../database/migrations/20250403_init_database.php';
+
+// Run migration
+$migration = new InitDatabase();
+$migration->up();
+
+echo "Database initialized successfully.\n";
