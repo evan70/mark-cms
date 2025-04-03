@@ -80,13 +80,17 @@ class ArticleController
         $data = $request->getParsedBody();
 
         // Validate input
-        if (empty($data['translations'])) {
+        if (empty($data['translations'])
+        ) {
             return $response
                 ->withStatus(400)
                 ->withHeader('Content-Type', 'application/json')
                 ->withBody($response->getBody()->write(json_encode([
                     'error' => 'Translations are required'
-                ])));
+                ]
+                )
+                )
+                );
         }
 
         $article = Article::create([

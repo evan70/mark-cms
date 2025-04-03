@@ -37,6 +37,7 @@ protected function render(Response $response, Request $request, string $template
 - Added proper title and aria-label attributes to article links
 - Ensured all links have descriptive text for screen readers
 - Created article-link component for consistent and accessible article links
+- Added ArticleLinkService for centralized management of article links
 
 ```html
 <!-- Before: Link without descriptive text -->
@@ -52,12 +53,27 @@ protected function render(Response $response, Request $request, string $template
 </a>
 ```
 
+#### Article Link Service (2024-12-17)
+- Created a dedicated service for managing article links
+- Provides consistent formatting and accessibility attributes
+- Can be used via helper function or Blade component
+
+```php
+// Using the helper function
+<?= article_link($article, $language, ['showReadMore' => true]) ?>
+
+// Using the Blade component
+<x-article-link-v2 :article="$article" :language="$language" :show-read-more="true" />
+```
+
 ### Color and Contrast
 
 #### Improved Text Contrast (2024-12-17)
 - Added custom gray color variants with better contrast ratios in Tailwind configuration
 - Updated text colors throughout the site to meet WCAG 2.1 AA contrast requirements
 - Fixed low-contrast text on dark backgrounds
+- Used white text for headings on dark backgrounds for maximum contrast
+- Used lighter gray (text-gray-150) for descriptive text on dark backgrounds
 
 ```js
 // Custom accessible color variants in tailwind.config.js

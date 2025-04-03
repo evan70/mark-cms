@@ -39,7 +39,7 @@
                                class="text-blue-400 hover:text-blue-300">
                                 {{ __('Read More') }} →
                             </a>
-                            <span class="text-sm text-gray-500">
+                            <span class="text-sm text-gray-350">
                                 {{ date('d.m.Y', strtotime($article->published_at)) }}
                             </span>
                         </div>

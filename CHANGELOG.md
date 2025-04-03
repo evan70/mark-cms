@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added meta description to all pages for better SEO
 - Added meta keywords to all pages for better SEO
 - Created article-link component for consistent and accessible article links
+- Added ArticleLinkService and article-link-v2 component for improved article link management
+- Added article_link() helper function for easy generation of accessible article links
+- Added cache clearing functionality for development
+  - Modified BladeService to force recompile templates in development mode
+  - Added clearCache() method to BladeService
+  - Created clear-cache.php script and clear-cache.sh bash script
 
 ### Removed
 - Removed unused `IlluminateContainerAdapter` class
@@ -38,4 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added proper variable checking in article-link component
 - Fixed navigation animation issue that caused the nav element to jump on page load
 - Updated `getTranslation` methods in Article and Tag models to always return null
+- Fixed additional contrast issues with dates and text on dark backgrounds
+- Improved contrast for service section headings and descriptions by using white text for headings and lighter gray for descriptions
 - Improved 500 error page styling to match the 404 page for consistency

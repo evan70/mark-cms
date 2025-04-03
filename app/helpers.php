@@ -27,23 +27,23 @@ if (!function_exists('config')) {
     function config($key, $default = null) {
         $parts = explode('.', $key);
         $filename = array_shift($parts);
-        
+
         static $config = [];
-        
+
         if (!isset($config[$filename])) {
             $path = __DIR__ . '/../config/' . $filename . '.php';
             $config[$filename] = file_exists($path) ? require $path : [];
         }
-        
+
         $current = $config[$filename];
-        
+
         foreach ($parts as $part) {
             if (!is_array($current) || !isset($current[$part])) {
                 return $default;
             }
             $current = $current[$part];
         }
-        
+
         return $current;
     }
 }
@@ -95,15 +95,15 @@ if (!function_exists('session')) {
     function session($key = null, $default = null)
     {
         $session = app()->getContainer()->get('session');
-        
+
         if (is_null($key)) {
             return $session;
         }
-        
+
         if (func_num_args() === 1) {
             return $session->get($key, $default);
         }
-        
+
         $session->set($key, $default);
         return null;
     }
@@ -113,16 +113,16 @@ if (!function_exists('flash')) {
     function flash($key = null, $message = null)
     {
         $session = session();
-        
+
         if (is_null($key)) {
             return $session->getFlashMessages();
         }
-        
+
         if (!is_null($message)) {
             $session->flash($key, $message);
             return null;
         }
-        
+
         return $session->getFlash($key);
     }
 }
@@ -137,23 +137,23 @@ if (!function_exists('csrf_token')) {
 if (!function_exists('mix')) {
     function mix($path) {
         static $manifest;
-        
+
         if (!$manifest) {
             $manifestPath = dirname(__DIR__) . '/public/mix-manifest.json';
-            
+
             if (!file_exists($manifestPath)) {
                 throw new Exception('The Mix manifest does not exist.');
             }
-            
+
             $manifest = json_decode(file_get_contents($manifestPath), true);
         }
-        
+
         $path = "/{$path}";
-        
+
         if (!isset($manifest[$path])) {
             throw new Exception("Unable to locate Mix file: {$path}.");
         }
-        
+
         return $manifest[$path];
     }
 }
@@ -180,7 +180,7 @@ if (!function_exists('str_limit')) {
         if (mb_strlen($value) <= $limit) {
             return $value;
         }
-        
+
         return rtrim(mb_substr($value, 0, $limit)) . $end;
     }
 }
@@ -190,5 +190,21 @@ if (!function_exists('markdown')) {
     {
         $parser = new \Parsedown();
         return $parser->text($text);
+    }
+}
+
+if (!function_exists('article_link')) {
+    /**
+     * Generate a properly formatted link to an article
+     *
+     * @param \App\Models\Article $article The article to link to
+     * @param string $language The current language code
+     * @param array $options Additional options for the link
+     * @return string HTML for the link
+     */
+    function article_link($article, $language, $options = [])
+    {
+        $service = app()->getContainer()->get(\App\Services\ArticleLinkService::class);
+        return $service->renderArticleLink($article, $language, $options);
     }
 }

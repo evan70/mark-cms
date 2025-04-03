@@ -50,8 +50,8 @@ class ResponsiveSK {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Web Development</h3>
-                        <p class="text-gray-250">Moderné webové aplikácie postavené na najnovších technológiách s dôrazom na výkon a škálovateľnosť.</p>
+                        <h3 class="text-xl font-semibold mb-4 text-white">Web Development</h3>
+                        <p class="text-gray-150">Moderné webové aplikácie postavené na najnovších technológiách s dôrazom na výkon a škálovateľnosť.</p>
                     </div>
                 </div>
 
@@ -62,8 +62,8 @@ class ResponsiveSK {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Mobile Development</h3>
-                        <p class="text-gray-250">Natívne a cross-platform mobilné aplikácie pre iOS a Android s intuitívnym používateľským rozhraním.</p>
+                        <h3 class="text-xl font-semibold mb-4 text-white">Mobile Development</h3>
+                        <p class="text-gray-150">Natívne a cross-platform mobilné aplikácie pre iOS a Android s intuitívnym používateľským rozhraním.</p>
                     </div>
                 </div>
 
@@ -74,8 +74,8 @@ class ResponsiveSK {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">DevOps & Cloud</h3>
-                        <p class="text-gray-250">Automatizácia, monitoring a správa cloudovej infraštruktúry pre maximálnu dostupnosť vašich aplikácií.</p>
+                        <h3 class="text-xl font-semibold mb-4 text-white">DevOps & Cloud</h3>
+                        <p class="text-gray-150">Automatizácia, monitoring a správa cloudovej infraštruktúry pre maximálnu dostupnosť vašich aplikácií.</p>
                     </div>
                 </div>
             </div>
@@ -124,11 +124,11 @@ class ResponsiveSK {
                                             'class' => 'text-gray-100 hover:text-purple-400 transition-colors'
                                         ])
                                     </h3>
-                                    <p class="text-gray-400 mb-4 line-clamp-2">
+                                    <p class="text-gray-150 mb-4 line-clamp-2">
                                         {{ $translation->perex }}
                                     </p>
                                     <div class="flex items-center justify-between">
-                                        <span class="text-sm text-gray-500">
+                                        <span class="text-sm text-gray-150">
                                             {{ $article->published_at->format('d.m.Y') }}
                                         </span>
                                         <a href="/{{ $language }}/article/{{ $article->slug }}"
