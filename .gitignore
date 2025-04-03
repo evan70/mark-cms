@@ -9,6 +9,9 @@ storage/
 # Documentation
 docs/
 
+# AI Conversation
+AI_CONVERSATION.md
+
 # Environment files
 .env
 .env.backup
