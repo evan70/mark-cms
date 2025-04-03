@@ -6,6 +6,9 @@ vendor/
 storage/
 !storage/.gitkeep
 
+# Documentation
+docs/
+
 # Environment files
 .env
 .env.backup

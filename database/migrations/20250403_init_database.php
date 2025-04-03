@@ -2,27 +2,73 @@
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class InitSchema 
+class InitDatabase
 {
     public function up(): void
     {
+        // Admin Users
+        $this->createAdminSchema();
+        
+        // Content Management
         $this->createLanguagesTable();
         $this->createCategoriesSchema();
         $this->createTagsSchema();
         $this->createArticlesSchema();
     }
 
+    private function createAdminSchema(): void
+    {
+        // Admin Users
+        Capsule::schema()->create('admin_users', function ($table) {
+            $table->id();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('name');
+            $table->enum('role', ['admin', 'editor'])->default('editor');
+            $table->boolean('is_active')->default(true);
+            $table->rememberToken();
+            $table->timestamp('last_login_at')->nullable();
+            $table->timestamps();
+        });
+
+        // Admin Permissions
+        Capsule::schema()->create('admin_permissions', function ($table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
+
+        // Admin Role Permissions
+        Capsule::schema()->create('admin_role_permissions', function ($table) {
+            $table->string('role');
+            $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade');
+            $table->primary(['role', 'permission_id']);
+        });
+
+        // Admin Activity Log
+        Capsule::schema()->create('admin_activity_log', function ($table) {
+            $table->id();
+            $table->foreignId('admin_user_id')->constrained('admin_users')->onDelete('cascade');
+            $table->string('action');
+            $table->string('entity_type')->nullable();
+            $table->unsignedBigInteger('entity_id')->nullable();
+            $table->json('changes')->nullable();
+            $table->string('ip_address', 45)->nullable();
+            $table->string('user_agent')->nullable();
+            $table->timestamps();
+        });
+    }
+
     private function createLanguagesTable(): void 
     {
-        if (!Capsule::schema()->hasTable('languages')) {
-            Capsule::schema()->create('languages', function ($table) {
-                $table->id();
-                $table->string('code', 5)->unique();
-                $table->string('name');
-                $table->boolean('is_active')->default(true);
-                $table->timestamps();
-            });
-        }
+        Capsule::schema()->create('languages', function ($table) {
+            $table->id();
+            $table->string('code', 5)->unique();
+            $table->string('name');
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
     }
 
     private function createCategoriesSchema(): void 
@@ -121,6 +167,7 @@ class InitSchema
     public function down(): void
     {
         $tables = [
+            // Content tables
             'article_tags',
             'article_categories',
             'article_translations',
@@ -129,7 +176,13 @@ class InitSchema
             'tags',
             'category_translations',
             'categories',
-            'languages'
+            'languages',
+            
+            // Admin tables
+            'admin_role_permissions',
+            'admin_permissions',
+            'admin_activity_log',
+            'admin_users'
         ];
 
         foreach ($tables as $table) {
