@@ -89,6 +89,8 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
   - Použité filter_var pre konverziu SESSION_SECURE_COOKIE na boolean
 - Pridaný článok o umelej inteligencii (2025-04-03)
   - Vytvorený Markdown súbor docs/articles/ai-revolution.md
+- Upravený .gitignore (2025-04-03)
+  - Pridané ignorácia databázových súborov *.sqlite a *.sqlite-journal
 
 ### Autorizácia
 

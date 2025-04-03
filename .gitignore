@@ -6,6 +6,10 @@ vendor/
 storage/
 !storage/.gitkeep
 
+# Database
+database/*.sqlite
+database/*.sqlite-journal
+
 # Documentation
 docs/
 
