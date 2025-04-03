@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <link href="/css/app.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="h-full bg-gray-900 text-gray-100">
     <div class="min-h-screen flex flex-col">
         <!-- Top Navigation -->
         <nav class="bg-gray-800 text-white">
@@ -36,13 +36,10 @@
                                         </span>
                                     </button>
                                 </div>
-                                <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                    <a href="/mark/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
-                                    <a href="/mark/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
-                                    <form method="POST" action="/mark/logout">
-                                        {!! csrf_fields() !!}
-                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</button>
-                                    </form>
+                                <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                    <a href="/mark/profile" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700" role="menuitem">Your Profile</a>
+                                    <a href="/mark/settings" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700" role="menuitem">Settings</a>
+                                    <a href="{{ url('/mark/logout') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700" role="menuitem">Sign out</a>
                                 </div>
                             </div>
                         </div>
@@ -98,9 +95,9 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white">
+        <footer class="bg-gray-800 border-t border-gray-700">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <p class="text-center text-gray-500 text-sm">
+                <p class="text-center text-gray-400 text-sm">
                     &copy; {{ date('Y') }} Mark CMS. All rights reserved.
                 </p>
             </div>

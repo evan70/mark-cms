@@ -65,16 +65,9 @@ class MarkAuthController extends BaseController
 
         $this->authService->login($request, $user);
 
-        // Redirect to admin dashboard if user has admin access
-        if ($user->hasAdminAccess()) {
-            return $response
-                ->withHeader('Location', '/mark/admin/dashboard')
-                ->withStatus(302);
-        }
-
-        // Redirect to mark dashboard for contributors
+        // Redirect to mark dashboard for all users
         return $response
-            ->withHeader('Location', '/mark/dashboard')
+            ->withHeader('Location', '/mark')
             ->withStatus(302);
     }
 

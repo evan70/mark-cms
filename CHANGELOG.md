@@ -51,6 +51,44 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Pridaný jednoduchý skript pre inicializáciu databázy (2025-04-03)
   - Vytvorený skript bin/db-init pre jednoduché spustenie inicializačnej migrácie
 - Pridaná premenná APP_ENV do .env súboru pre správnu konfiguráciu session
+- Opravená konfigurácia session (2025-04-03)
+  - Nastavený správny názov session cookie podľa SESSION_NAME v .env
+  - Explicitné nastavenie názvu session pred jej spustením
+- Opravená registrácia kontrolérov v kontajneri (2025-04-03)
+  - Pridané predanie kontajnera do konštruktora kontrolérov
+  - Pridaná definícia pre 'session' v kontajneri
+- Pridané helper funkcie (2025-04-03)
+  - url() - Umožňuje generáciu URL v šablónach
+  - request() - Poskytuje objekt požiadavky s metódou is() pre kontrolu aktuálnej cesty
+  - now() - Vráti aktuálny dátum a čas vo formáte Y-m-d H:i:s
+- Premenovanie adresára kontrolérov (2025-04-03)
+  - Premenovanie adresára `app/Controllers/Admin` na `app/Controllers/Mark` pre konzistenciu kódu
+  - Aktualizované importy v routes/mark.php
+  - Aktualizovaná registrácia kontrolérov v kontajneri
+  - Upravený DashboardController pre používanie BaseController
+  - Upravená šablóna dashboard.blade.php pre používanie layouts/app.blade.php
+  - Nastavená tmavá téma pre admin rozhranie
+  - Upravené farby v tabuľkách a formulároch pre konzistentný vzhľad
+  - Pridaná možnosť prepnutia medzi horným menu a bočným menu layoutom
+  - Pridaná stránka nastavenia pre výber layoutu
+  - Opravený spôsob prepnutia layoutu pomocou samostatných šablón pre každý layout
+  - Pridaná cesta `/mark/logout` pre odhlásenie používateľov z Mark CMS
+  - Opravené nastavenie názvu session cookie na `mark_session`
+  - Opravená duplicitná definícia cesty `/mark/logout`
+  - Presunutiá cesta `/mark/logout` mimo chránenej skupiny, aby bola dostupná aj pre neprihlasených používateľov
+  - Opravené nastavenie názvu session cookie pomocou ini_set
+  - Opravené presmerovanie po prihlásení na `/mark` namiesto `/mark/admin/dashboard`
+  - Opravené duplicitné spustenie session v container.php a SessionMiddleware
+  - Upravené poradie middleware, aby SessionMiddleware bolo pred CSRF middleware
+  - Použité session ako úložisko pre CSRF Guard
+  - Upravený SkipCsrfMiddleware, aby preskakoval CSRF kontrolu len pre určité cesty
+  - Zmenená metóda pre odhlásenie z POST na GET
+  - Upravené formuláre pre odhlásenie na používanie odkazov namiesto formulárov
+  - Upravený SessionMiddleware, aby používal session_name() a session_start() s parametrami
+  - Nastavený názov session cookie v public/index.php pred spustením aplikácie
+  - Použité filter_var pre konverziu SESSION_SECURE_COOKIE na boolean
+- Pridaný článok o umelej inteligencii (2025-04-03)
+  - Vytvorený Markdown súbor docs/articles/ai-revolution.md
 
 ### Autorizácia
 

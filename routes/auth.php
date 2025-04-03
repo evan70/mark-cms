@@ -23,7 +23,8 @@ return function (App $app) {
     });
 
     // Mark CMS authentication routes
-    // Login and logout routes are now handled by AuthController
+    // Login route is now handled by AuthController
+    // Logout route for Mark CMS is defined in routes/mark.php
 
     // Protected Mark CMS routes
     $app->group('/mark', function (RouteCollectorProxy $group) {

@@ -127,11 +127,25 @@ class AuthController extends BaseController
      */
     public function logout(Request $request, Response $response): Response
     {
-        $this->authService->logout();
+        // Check if we're logging out from Mark CMS
+        $referer = $request->getHeaderLine('Referer');
+        $isMarkLogout = strpos($referer, '/mark') !== false;
 
-        return $response
-            ->withHeader('Location', '/')
-            ->withStatus(302);
+        if ($isMarkLogout) {
+            // Logout from Mark CMS
+            $this->markAuthService->logout();
+
+            return $response
+                ->withHeader('Location', '/login?mark=1')
+                ->withStatus(302);
+        } else {
+            // Logout from regular user session
+            $this->authService->logout();
+
+            return $response
+                ->withHeader('Location', '/')
+                ->withStatus(302);
+        }
     }
 
     /**

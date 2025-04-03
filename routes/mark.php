@@ -1,11 +1,12 @@
 <?php
 
 use Slim\App;
-use App\Controllers\Admin\DashboardController;
-use App\Controllers\Admin\ArticleController;
-use App\Controllers\Admin\AuthController;
-use App\Controllers\Admin\UserController;
-use App\Controllers\Admin\MarkUserController;
+use App\Controllers\Mark\DashboardController;
+use App\Controllers\Mark\ArticleController;
+use App\Controllers\Mark\AuthController;
+use App\Controllers\Mark\UserController;
+use App\Controllers\Mark\MarkUserController;
+use App\Controllers\Mark\SettingsController;
 use App\Middleware\AdminAuthMiddleware;
 use App\Middleware\MarkAuthMiddleware;
 use Slim\Routing\RouteCollectorProxy;
@@ -24,6 +25,8 @@ return function (App $app) {
         // Dashboard - opravené routes
         $group->get('', [DashboardController::class, 'index'])->setName('mark.dashboard');
         $group->get('/', [DashboardController::class, 'index'])->setName('mark.dashboard.slash');
+
+        // Logout route is defined outside of the protected group
 
         // Articles management
         $group->group('/articles', function (RouteCollectorProxy $group) {
@@ -54,5 +57,12 @@ return function (App $app) {
             $group->post('/{id}/edit', [MarkUserController::class, 'update']);
             $group->get('/{id}/delete', [MarkUserController::class, 'delete'])->setName('mark.mark_users.delete');
         });
+
+        // Settings
+        $group->get('/settings', [SettingsController::class, 'index'])->setName('mark.settings');
+        $group->post('/settings/layout', [SettingsController::class, 'updateLayout'])->setName('mark.settings.layout');
     })->add($app->getContainer()->get(MarkAuthMiddleware::class));
+
+    // Logout route - outside of the protected group
+    $app->get('/mark/logout', [\App\Controllers\Auth\AuthController::class, 'logout'])->setName('mark.logout');
 };

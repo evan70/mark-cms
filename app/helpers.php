@@ -8,6 +8,71 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('url')) {
+    /**
+     * Generate a URL for the application.
+     *
+     * @param string $path
+     * @param array $params
+     * @return string
+     */
+    function url(string $path = '', array $params = []): string
+    {
+        $baseUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost', '/');
+        $path = ltrim($path, '/');
+
+        $url = $baseUrl . '/' . $path;
+
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+
+        return $url;
+    }
+}
+
+if (!function_exists('request')) {
+    /**
+     * Get the current request object.
+     *
+     * @return object
+     */
+    function request(): object
+    {
+        return new class {
+            /**
+             * Check if the current request path matches a pattern.
+             *
+             * @param string $pattern
+             * @return bool
+             */
+            public function is(string $pattern): bool
+            {
+                $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                $path = trim($path, '/');
+
+                // Convert the pattern to a regular expression
+                $pattern = preg_quote($pattern, '#');
+                $pattern = str_replace('\*', '.*', $pattern);
+
+                return (bool) preg_match('#^' . $pattern . '$#i', $path);
+            }
+        };
+    }
+}
+
+if (!function_exists('now')) {
+    /**
+     * Get the current date and time.
+     *
+     * @return string
+     */
+    function now(): string
+    {
+        return date('Y-m-d H:i:s');
+    }
+}
+
 if (!function_exists('csrf_fields')) {
     /**
      * Generate CSRF fields for forms

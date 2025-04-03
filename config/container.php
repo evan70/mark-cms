@@ -76,7 +76,6 @@ return [
     'csrf' => function (ContainerInterface $container) {
         $responseFactory = $container->get('response_factory');
 
-        // Use session storage
         // Make sure session is started
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
@@ -99,6 +98,11 @@ return [
         return new \Slim\Psr7\Factory\ResponseFactory();
     },
 
+    // Session
+    'session' => function (ContainerInterface $container) {
+        return new \SlimSession\Helper();
+    },
+
     // Logger
     'logger' => function (ContainerInterface $container) {
         $logger = new \Monolog\Logger('app');
@@ -116,12 +120,32 @@ return [
         return new \App\Console\Commands\SeedCommand();
     },
 
-    // Admin Controllers
-    \App\Controllers\Admin\UserController::class => function (ContainerInterface $container) {
-        return new \App\Controllers\Admin\UserController();
+    // Mark Controllers
+    \App\Controllers\Mark\UserController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\UserController($container);
     },
 
-    \App\Controllers\Admin\MarkUserController::class => function (ContainerInterface $container) {
-        return new \App\Controllers\Admin\MarkUserController();
+    \App\Controllers\Mark\MarkUserController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\MarkUserController($container);
+    },
+
+    \App\Controllers\Mark\DashboardController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\DashboardController($container);
+    },
+
+    \App\Controllers\Mark\ArticleController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\ArticleController($container);
+    },
+
+    \App\Controllers\Mark\CategoryController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\CategoryController($container);
+    },
+
+    \App\Controllers\Mark\TagController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\TagController($container);
+    },
+
+    \App\Controllers\Mark\SettingsController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\SettingsController($container);
     },
 ];

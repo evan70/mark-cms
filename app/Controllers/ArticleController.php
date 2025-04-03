@@ -56,4 +56,6 @@ class ArticleController extends BaseController
             throw new \Slim\Exception\HttpNotFoundException($request);
         }
     }
+
+
 }

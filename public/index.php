@@ -14,6 +14,11 @@ require __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
+// Set session name before any session is started
+$sessionName = $_ENV['SESSION_NAME'] ?? 'mark_session';
+ini_set('session.name', $sessionName);
+session_name($sessionName);
+
 // Create Container
 $container = new Container();
 

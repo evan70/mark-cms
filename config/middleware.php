@@ -16,11 +16,11 @@ return function (App $app) {
     $app->add(new ViewMiddleware($container->get(BladeService::class)));
     $app->add(new LanguageMiddleware());
     $app->add(new StaticAssetsMiddleware());
-    $app->add($container->get(\App\Middleware\SkipCsrfMiddleware::class));
-    $app->add($container->get('csrf'));
-    // Session middleware must be added after CSRF middleware
+    // Session middleware must be added before CSRF middleware
     // because CSRF middleware uses session
     $app->add(new SessionMiddleware());
+    $app->add($container->get(\App\Middleware\SkipCsrfMiddleware::class));
+    $app->add($container->get('csrf'));
     // Add as one of the last middleware in the stack
     // but before error handling middleware
     $app->add(HtmlCompressorMiddleware::class);

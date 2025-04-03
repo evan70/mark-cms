@@ -9,15 +9,27 @@ class SessionMiddleware
 {
     public function __invoke(Request $request, RequestHandler $handler)
     {
-        // Always start session with secure defaults
-        session_start([
-            'cookie_httponly' => true,
-            'cookie_secure' => ($_ENV['APP_ENV'] ?? 'development') === 'production',
-            'cookie_samesite' => 'Lax',
-            'cookie_path' => '/',
-            'cookie_domain' => $_ENV['SESSION_DOMAIN'] ?? '',
-            'name' => $_ENV['SESSION_NAME'] ?? 'slim_session'
-        ]);
+        // Get session name from environment
+        $sessionName = $_ENV['SESSION_NAME'] ?? 'mark_session';
+
+        // Set session name - must be done before session_start
+        if (session_status() === PHP_SESSION_NONE) {
+            // Force session name
+            session_name($sessionName);
+
+            // Set session parameters
+            $sessionParams = [
+                'cookie_lifetime' => 0,
+                'cookie_httponly' => true,
+                'cookie_secure' => filter_var($_ENV['SESSION_SECURE_COOKIE'] ?? false, FILTER_VALIDATE_BOOLEAN),
+                'cookie_samesite' => 'Lax',
+                'cookie_path' => $_ENV['SESSION_PATH'] ?? '/',
+                'cookie_domain' => $_ENV['SESSION_DOMAIN'] ?? ''
+            ];
+
+            // Start session with parameters
+            session_start($sessionParams);
+        }
 
         $response = $handler->handle($request);
 
