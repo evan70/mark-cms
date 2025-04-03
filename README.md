@@ -63,6 +63,18 @@ Mark CMS je moderný, ľahký a flexibilný systém na správu obsahu (CMS) post
 
 ## Vývoj
 
+### Dokumentácia
+
+Podrobná dokumentácia je dostupná v adresári `docs`:
+
+- [Architektúra](docs/ARCHITECTURE.md) - Detailný popis architektúry systému
+- [Prístupnosť](docs/ACCESSIBILITY.md) - Implementácia štandardov prístupnosti
+- [API](docs/API.md) - Dokumentácia REST API
+- [API Autentifikácia](docs/API_AUTHENTICATION.md) - Autentifikácia pre REST API
+- [Vývoj](docs/DEVELOPMENT.md) - Informácie pre vývojárov
+- [Jazykové smerovanie](docs/LANGUAGE_ROUTING.md) - Implementácia viacjazyčnosti
+- [Changelog](CHANGELOG.md) - Záznam zmien v projekte
+
 ### Štruktúra projektu
 
 ```
