@@ -1,25 +1,16 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+/**
+ * Database schema configuration
+ * 
+ * This file contains the schema definition for the database.
+ * It is used by the DatabaseInitializer service to create the initial database structure.
+ */
 
-class InitDatabase
-{
-    public function up(): void
-    {
+return [
+    'tables' => [
         // Admin Users
-        $this->createAdminSchema();
-        
-        // Content Management
-        $this->createLanguagesTable();
-        $this->createCategoriesSchema();
-        $this->createTagsSchema();
-        $this->createArticlesSchema();
-    }
-
-    private function createAdminSchema(): void
-    {
-        // Admin Users
-        Capsule::schema()->create('admin_users', function ($table) {
+        'admin_users' => function ($table) {
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
@@ -29,25 +20,25 @@ class InitDatabase
             $table->rememberToken();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
-        });
-
+        },
+        
         // Admin Permissions
-        Capsule::schema()->create('admin_permissions', function ($table) {
+        'admin_permissions' => function ($table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('description')->nullable();
             $table->timestamps();
-        });
-
+        },
+        
         // Admin Role Permissions
-        Capsule::schema()->create('admin_role_permissions', function ($table) {
+        'admin_role_permissions' => function ($table) {
             $table->string('role');
             $table->foreignId('permission_id')->constrained('admin_permissions')->onDelete('cascade');
             $table->primary(['role', 'permission_id']);
-        });
-
+        },
+        
         // Admin Activity Log
-        Capsule::schema()->create('admin_activity_log', function ($table) {
+        'admin_activity_log' => function ($table) {
             $table->id();
             $table->foreignId('admin_user_id')->constrained('admin_users')->onDelete('cascade');
             $table->string('action');
@@ -57,31 +48,28 @@ class InitDatabase
             $table->string('ip_address', 45)->nullable();
             $table->string('user_agent')->nullable();
             $table->timestamps();
-        });
-    }
-
-    private function createLanguagesTable(): void 
-    {
-        Capsule::schema()->create('languages', function ($table) {
+        },
+        
+        // Languages
+        'languages' => function ($table) {
             $table->id();
             $table->string('code', 5)->unique();
             $table->string('name');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-        });
-    }
-
-    private function createCategoriesSchema(): void 
-    {
-        Capsule::schema()->create('categories', function ($table) {
+        },
+        
+        // Categories
+        'categories' => function ($table) {
             $table->id();
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
-        });
-
-        Capsule::schema()->create('category_translations', function ($table) {
+        },
+        
+        // Category Translations
+        'category_translations' => function ($table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('locale', 5);
@@ -92,19 +80,18 @@ class InitDatabase
             $table->timestamps();
             
             $table->unique(['category_id', 'locale']);
-        });
-    }
-
-    private function createTagsSchema(): void 
-    {
-        Capsule::schema()->create('tags', function ($table) {
+        },
+        
+        // Tags
+        'tags' => function ($table) {
             $table->id();
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-        });
-
-        Capsule::schema()->create('tag_translations', function ($table) {
+        },
+        
+        // Tag Translations
+        'tag_translations' => function ($table) {
             $table->id();
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->string('locale', 5);
@@ -115,12 +102,10 @@ class InitDatabase
             $table->timestamps();
             
             $table->unique(['tag_id', 'locale']);
-        });
-    }
-
-    private function createArticlesSchema(): void 
-    {
-        Capsule::schema()->create('articles', function ($table) {
+        },
+        
+        // Articles
+        'articles' => function ($table) {
             $table->id();
             $table->string('slug')->unique();
             $table->string('featured_image')->nullable();
@@ -128,9 +113,10 @@ class InitDatabase
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Capsule::schema()->create('article_translations', function ($table) {
+        },
+        
+        // Article Translations
+        'article_translations' => function ($table) {
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->string('locale', 5);
@@ -143,50 +129,60 @@ class InitDatabase
             
             $table->unique(['article_id', 'locale']);
             $table->index('locale');
-        });
-
-        Capsule::schema()->create('article_categories', function ($table) {
+        },
+        
+        // Article Categories
+        'article_categories' => function ($table) {
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             
             $table->unique(['article_id', 'category_id']);
-        });
-
-        Capsule::schema()->create('article_tags', function ($table) {
+        },
+        
+        // Article Tags
+        'article_tags' => function ($table) {
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             
             $table->unique(['article_id', 'tag_id']);
-        });
-    }
-
-    public function down(): void
-    {
-        $tables = [
-            // Content tables
-            'article_tags',
-            'article_categories',
-            'article_translations',
-            'articles',
-            'tag_translations',
-            'tags',
-            'category_translations',
-            'categories',
-            'languages',
-            
-            // Admin tables
-            'admin_role_permissions',
-            'admin_permissions',
-            'admin_activity_log',
-            'admin_users'
-        ];
-
-        foreach ($tables as $table) {
-            Capsule::schema()->dropIfExists($table);
-        }
-    }
-}
+        },
+    ],
+    
+    // Table creation order (to handle foreign key constraints)
+    'creation_order' => [
+        'admin_users',
+        'admin_permissions',
+        'admin_role_permissions',
+        'admin_activity_log',
+        'languages',
+        'categories',
+        'category_translations',
+        'tags',
+        'tag_translations',
+        'articles',
+        'article_translations',
+        'article_categories',
+        'article_tags',
+    ],
+    
+    // Table drop order (reverse of creation order)
+    'drop_order' => [
+        'article_tags',
+        'article_categories',
+        'article_translations',
+        'articles',
+        'tag_translations',
+        'tags',
+        'category_translations',
+        'categories',
+        'languages',
+        'admin_activity_log',
+        'admin_role_permissions',
+        'admin_permissions',
+        'admin_users',
+    ],
+];

@@ -30,4 +30,14 @@ return [
     \App\Services\ArticleLinkService::class => function (ContainerInterface $container) {
         return new \App\Services\ArticleLinkService();
     },
+
+    \App\Services\DatabaseInitializerService::class => function (ContainerInterface $container) {
+        return new \App\Services\DatabaseInitializerService($container->get('logger'));
+    },
+
+    \App\Console\Commands\DatabaseInitCommand::class => function (ContainerInterface $container) {
+        return new \App\Console\Commands\DatabaseInitCommand(
+            $container->get(\App\Services\DatabaseInitializerService::class)
+        );
+    },
 ];

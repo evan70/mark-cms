@@ -56,9 +56,10 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
   - Upravený BladeService pre vynútené prekompilovanie šablón v režime vývoja
   - Pridaná metóda clearCache() do BladeService
   - Vytvorené skripty clear-cache.php a clear-cache.sh
-- Zjednotená inicializačná migrácia databázy (2025-04-03)
-  - Spojené dve migrácie do jednej inicializačnej migrácie
-  - Lepšia organizácia schémy databázy
+- Presun inicializácie databázy do konfigurácie (2025-04-03)
+  - Vytvorený konfiguračný súbor pre schému databázy
+  - Vytvorená služba DatabaseInitializerService pre inicializáciu databázy
+  - Pridaný konzolvý príkaz db:init pre inicializáciu databázy
 
 #### Opravené
 - Problém s animáciou navigácie, ktorá spôsobovala posun prvku nav pri načítaní stránky (2025-04-03)

@@ -3,18 +3,30 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use DI\Container;
 use Symfony\Component\Console\Application;
 use App\Commands\MigrateCommand;
 use App\Commands\SeedCommand;
+use App\Console\Commands\DatabaseInitCommand;
 
 // Load environment variables
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
+
+// Create Container
+$container = new Container();
+
+// Set container definitions
+$definitions = require __DIR__ . '/../config/container.php';
+foreach ($definitions as $key => $definition) {
+    $container->set($key, $definition);
+}
 
 $application = new Application();
 
 // Register commands
 $application->add(new MigrateCommand());
 $application->add(new SeedCommand());
+$application->add($container->get(DatabaseInitCommand::class));
 
 $application->run();
