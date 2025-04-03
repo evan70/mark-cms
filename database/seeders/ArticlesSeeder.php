@@ -16,7 +16,7 @@ class ArticlesSeeder
                 'published_at' => '2024-02-20 12:00:00',
                 'translations' => [
                     'sk' => [
-                        'title' => 'Vitajte na našom blogu',
+                        'title' => 'Revolúcia umelej inteligencie: Ako AI mení náš svet',
                         'perex' => 'Prvý článok na našom novom blogu',
                         'content' => "# Vitajte\n\nToto je prvý článok na našom blogu. Budeme sa venovať technológiám, inováciám a biznisu.",
                         'meta_title' => 'Vitajte na blogu',
