@@ -44,9 +44,14 @@ Mark CMS je moderný, ľahký a flexibilný systém na správu obsahu (CMS) post
    cp .env.example .env
    ```
 
-5. Vytvorte databázu a spustite migrácie:
+5. Vytvorte databázu a spustite inicializačnú migráciu:
    ```bash
-   php bin/console db:migrate
+   php bin/db-init
+   ```
+
+   Alebo resetujte databázu (drop a recreate):
+   ```bash
+   php bin/console db:reset
    ```
 
 6. Spustite vývojový server:
@@ -70,6 +75,7 @@ Podrobná dokumentácia je dostupná v adresári `docs`:
 - [Architektúra](docs/ARCHITECTURE.md) - Detailný popis architektúry systému
 - [Prístupnosť](docs/ACCESSIBILITY.md) - Implementácia štandardov prístupnosti
 - [Autorizácia](docs/AUTHORIZATION.md) - Systém autorizácie a prístupových práv
+- [Layouty](docs/LAYOUTS.md) - Dostupné layouty a ich používanie
 - [API](docs/API.md) - Dokumentácia REST API
 - [API Autentifikácia](docs/API_AUTHENTICATION.md) - Autentifikácia pre REST API
 - [Vývoj](docs/DEVELOPMENT.md) - Informácie pre vývojárov
@@ -87,6 +93,10 @@ mark-cms/
 │   └── Services/         # Služby
 ├── config/               # Konfiguračné súbory
 ├── database/             # Migrácie a seedery
+│   ├── migrations/       # Migračné súbory
+│   └── seeders/          # Seedery pre naplnenie databázy
+├── docs/                 # Dokumentácia
+│   └── articles/         # Články v Markdown formáte
 ├── public/               # Verejný adresár
 ├── resources/            # Frontend zdroje
 │   ├── js/               # JavaScript súbory

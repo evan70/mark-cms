@@ -91,6 +91,10 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
   - Vytvorený Markdown súbor docs/articles/ai-revolution.md
 - Upravený .gitignore (2025-04-03)
   - Pridané ignorácia databázových súborov *.sqlite a *.sqlite-journal
+- Aktualizovaná dokumentácia (2025-04-03)
+  - Aktualizovaný README.md s informáciami o inicializácii databázy a štruktúre projektu
+  - Aktualizovaná dokumentácia o autorizácii s aktuálnymi cestami
+  - Pridaná dokumentácia o layoutoch a ich používaní
 
 ### Autorizácia
 

@@ -24,17 +24,17 @@ if (!mix.inProduction()) {
     });
 }
 
-{
-    minimize: mix.inProduction() ? {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
-        minifyCSS: true,
-        minifyJS: true,
-        minifyURLs: true,
-        removeEmptyAttributes: true
-    } : false
-}
+// {
+//     minimize: mix.inProduction() ? {
+//         collapseWhitespace: true,
+//         removeComments: true,
+//         removeRedundantAttributes: true,
+//         removeScriptTypeAttributes: true,
+//         removeStyleLinkTypeAttributes: true,
+//         useShortDoctype: true,
+//         minifyCSS: true,
+//         minifyJS: true,
+//         minifyURLs: true,
+//         removeEmptyAttributes: true
+//     } : false
+// }
