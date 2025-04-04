@@ -20,7 +20,8 @@
         "league/commonmark": "^2.6",
         "symfony/yaml": "^7.2",
         "openai-php/client": "^0.10.3",
-        "symfony/http-client": "^7.2"
+        "symfony/http-client": "^7.2",
+        "cloudinary/cloudinary_php": "^3.1"
     },
     "autoload": {
         "psr-4": {

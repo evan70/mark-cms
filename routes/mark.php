@@ -11,6 +11,7 @@ use App\Controllers\Mark\CategoryController;
 use App\Controllers\Mark\TagController;
 use App\Controllers\Mark\ContentMarkController;
 use App\Controllers\Mark\AIContentController;
+use App\Controllers\Mark\MediaController;
 use App\Middleware\AdminAuthMiddleware;
 use App\Middleware\MarkAuthMiddleware;
 use Slim\Routing\RouteCollectorProxy;
@@ -91,8 +92,25 @@ return function (App $app) {
         // Settings
         $group->get('/settings', [SettingsController::class, 'index'])->setName('mark.settings');
         $group->post('/settings/layout', [SettingsController::class, 'updateLayout'])->setName('mark.settings.layout');
+
+        // Media management
+        $group->group('/media', function (RouteCollectorProxy $group) {
+            $group->get('', [MediaController::class, 'index'])->setName('mark.media.index');
+            $group->get('/create', [MediaController::class, 'create'])->setName('mark.media.create');
+            $group->post('', [MediaController::class, 'store'])->setName('mark.media.store');
+            $group->get('/{folder}/{filename}', [MediaController::class, 'preview'])->setName('mark.media.preview');
+            $group->get('/{id}', [MediaController::class, 'show'])->setName('mark.media.show');
+            $group->post('/{id}', [MediaController::class, 'delete'])->setName('mark.media.delete');
+        });
+
+        // Media API
+        $group->post('/api/media', [MediaController::class, 'apiUpload'])->setName('mark.api.media.upload');
+        $group->get('/api/media', [MediaController::class, 'apiList'])->setName('mark.api.media.list');
     })->add($app->getContainer()->get(MarkAuthMiddleware::class));
 
     // Logout route - outside of the protected group
     $app->get('/mark/logout', [\App\Controllers\Auth\AuthController::class, 'logout'])->setName('mark.logout');
+
+    // Redirect to website - outside of the protected group
+    $app->get('/mark/to-website', [\App\Controllers\Mark\RedirectController::class, 'toWebsite'])->setName('mark.to-website');
 };

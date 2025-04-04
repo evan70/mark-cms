@@ -7,6 +7,16 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Pridané
+- Implementovaná služba pre správu médií pomocou lokálneho úložiska (2025-04-04)
+  - Vytvorená služba `CloudinaryService` pre nahrávanie a správu obrázkov
+  - Vytvorený kontrolér `MediaController` pre správu médií
+  - Vytvorené šablóny pre zobrazenie zoznamu médií, nahrávanie médií a detail média
+  - Pridaná možnosť full-screen náhľadu obrázkov
+  - Pridaná možnosť mazania obrázkov
+  - Pridané tlačidlo pre návrat na hlavnú stránku webu z admin rozhrania
+  - Vytvorený kontrolér `RedirectController` pre presmerovanie na hlavnú stránku webu
+
 ### Zmeny v štruktúre projektu
 
 #### Pridané

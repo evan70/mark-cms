@@ -7,6 +7,7 @@ use App\Controllers\ArticleController;
 use App\Controllers\HomeController;
 use App\Controllers\CategoryController;
 use App\Controllers\SearchController;
+use App\Controllers\ContentController;
 
 return function (App $app) {
     // Root route - použije default language (sk)
@@ -36,6 +37,13 @@ return function (App $app) {
         // Search
         $group->get('/search', [SearchController::class, 'index'])
               ->setName('search.index');
+
+        // Content (Markdown articles)
+        $group->get('/content', [ContentController::class, 'index'])
+              ->setName('content.index');
+
+        $group->get('/content/{slug}', [ContentController::class, 'show'])
+              ->setName('content.show');
 
     })->add(\App\Middleware\LanguageMiddleware::class);
 

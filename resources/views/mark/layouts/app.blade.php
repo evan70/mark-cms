@@ -21,16 +21,18 @@
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <span class="text-xl font-bold">Mark CMS</span>
+                            <a href="/mark/to-website" class="text-xl font-bold hover:text-purple-400" title="Go to website">Mark CMS</a>
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="/mark/to-website" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Website</a>
                                 <a href="/mark" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Dashboard</a>
 
                                 <!-- Content Management -->
                                 <a href="/mark/content" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Content</a>
                                 <a href="/mark/categories" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/categories*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Categories</a>
                                 <a href="/mark/tags" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/tags*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Tags</a>
+                                <a href="/mark/media" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/media*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Media</a>
                                 <a href="/mark/ai-content" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/ai-content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">AI Content</a>
 
                                 <!-- User Management -->
@@ -73,12 +75,14 @@
             </div>
             <div class="md:hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="/mark/to-website" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Go to Website</a>
                     <a href="/mark" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Dashboard</a>
 
                     <!-- Content Management -->
                     <a href="/mark/content" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Content</a>
                     <a href="/mark/categories" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/categories*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Categories</a>
                     <a href="/mark/tags" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/tags*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Tags</a>
+                    <a href="/mark/media" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/media*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Media</a>
                     <a href="/mark/ai-content" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/ai-content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">AI Content</a>
 
                     <!-- User Management -->
@@ -125,5 +129,9 @@
             </div>
         </footer>
     </div>
+
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
+    @yield('scripts')
 </body>
 </html>

@@ -60,6 +60,17 @@ return [
         return new \App\Controllers\Mark\AIContentController($container);
     },
 
+    \App\Controllers\Mark\MediaController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\MediaController(
+            $container,
+            $container->get(\App\Services\CloudinaryService::class)
+        );
+    },
+
+    \App\Controllers\Mark\RedirectController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\RedirectController();
+    },
+
     \App\Services\ArticleLinkService::class => function (ContainerInterface $container) {
         return new \App\Services\ArticleLinkService();
     },
@@ -72,6 +83,10 @@ return [
         return new \App\Services\SearchService(
             $container->get(\App\Services\SearchIndexService::class)
         );
+    },
+
+    \App\Services\CloudinaryService::class => function (ContainerInterface $container) {
+        return new \App\Services\CloudinaryService();
     },
 
     \App\Services\DatabaseInitializerService::class => function (ContainerInterface $container) {
@@ -196,6 +211,13 @@ return [
         return new \App\Controllers\SearchController(
             $container,
             $container->get(\App\Services\SearchService::class)
+        );
+    },
+
+    \App\Controllers\ContentController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\ContentController(
+            $container,
+            $container->get(\App\Services\ContentService::class)
         );
     },
 ];

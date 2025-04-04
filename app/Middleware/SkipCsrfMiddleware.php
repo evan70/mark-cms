@@ -14,6 +14,7 @@ class SkipCsrfMiddleware
      */
     protected $paths = [
         '/api/v1',  // Skip CSRF for API routes
+        '/mark/api', // Skip CSRF for Mark API routes
     ];
 
     /**

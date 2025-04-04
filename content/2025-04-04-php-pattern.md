@@ -8,12 +8,14 @@ categories:
     - blog/lifestyle
 tags:
     - 'test. PHP'
-featured_image: null
+featured_image: /uploads/images/c00fa8f9e2eb31ca.png
 excerpt: ''
 status: published
 language: sk
 is_index: false
 ---
+
+/uploads/mark-cms/67f050094b338_1743802377.png
 
 # Title
 
