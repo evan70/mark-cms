@@ -15,7 +15,7 @@ return [
 
     'debug' => (bool)($_ENV['APP_DEBUG'] ?? false),
 
-    'url' => $_ENV['APP_URL'] ?? 'http://localhost',
+    'url' => $_ENV['APP_URL'] ?? 'http://localhost:8000',
 
     'timezone' => 'UTC',
 

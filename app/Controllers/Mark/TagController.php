@@ -6,16 +6,45 @@ use App\Models\Tag;
 use App\Models\TagTranslation;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Respect\Validation\Validator as v;
+use App\Controllers\BaseController;
 
-class TagController
+class TagController extends BaseController
 {
     public function index(Request $request, Response $response): Response
     {
         $tags = Tag::with('translations')->get();
-        
-        return $response->withJson([
-            'data' => $tags
+
+        // Get layout preference from session
+        $layout = $_SESSION['layout_preference'] ?? 'mark.layouts.app';
+
+        // Set the view based on layout preference
+        $view = 'mark.tags.index';
+        if ($layout === 'mark.layouts.side-menu') {
+            $view = 'mark.tags.index-side-menu';
+        }
+
+        return $this->render($response, $request, $view, [
+            'title' => 'Tags',
+            'tags' => $tags
+        ]);
+    }
+
+    public function create(Request $request, Response $response): Response
+    {
+        $languages = ['en', 'sk', 'cs']; // Available languages
+
+        // Get layout preference from session
+        $layout = $_SESSION['layout_preference'] ?? 'mark.layouts.app';
+
+        // Set the view based on layout preference
+        $view = 'mark.tags.create';
+        if ($layout === 'mark.layouts.side-menu') {
+            $view = 'mark.tags.create-side-menu';
+        }
+
+        return $this->render($response, $request, $view, [
+            'title' => 'Create Tag',
+            'languages' => $languages
         ]);
     }
 
@@ -23,93 +52,127 @@ class TagController
     {
         $data = $request->getParsedBody();
 
-        $validator = v::key('slug', v::slug())
-                     ->key('translations', v::arrayVal()->each(
-                         v::key('locale', v::stringType()->notEmpty())
-                          ->key('name', v::stringType()->notEmpty())
-                     ));
-
-        if (!$validator->validate($data)) {
-            return $response->withStatus(400)->withJson([
-                'error' => 'Invalid input data'
-            ]);
-        }
-
+        // Create tag
         $tag = Tag::create([
-            'slug' => $data['slug']
+            'slug' => $this->createSlug($data['name_en'])
         ]);
 
-        foreach ($data['translations'] as $translation) {
-            TagTranslation::create([
-                'tag_id' => $tag->id,
-                'locale' => $translation['locale'],
-                'name' => $translation['name']
-            ]);
+        // Create translations
+        foreach (['en', 'sk', 'cs'] as $locale) {
+            if (!empty($data["name_{$locale}"])) {
+                $tag->translations()->create([
+                    'locale' => $locale,
+                    'name' => $data["name_{$locale}"]
+                ]);
+            }
         }
 
-        return $response->withStatus(201)->withJson([
-            'data' => $tag->load('translations')
-        ]);
+        // Redirect to tags list
+        return $response
+            ->withHeader('Location', '/mark/tags')
+            ->withStatus(302);
     }
 
-    public function show(Request $request, Response $response, array $args): Response
+    public function edit(Request $request, Response $response, array $args): Response
     {
-        $tag = Tag::with('translations')->find($args['id']);
-        
-        if (!$tag) {
-            return $response->withStatus(404)->withJson([
-                'error' => 'Tag not found'
-            ]);
+        $tag = Tag::with('translations')->findOrFail($args['id']);
+        $languages = ['en', 'sk', 'cs']; // Available languages
+
+        // Get layout preference from session
+        $layout = $_SESSION['layout_preference'] ?? 'mark.layouts.app';
+
+        // Set the view based on layout preference
+        $view = 'mark.tags.edit';
+        if ($layout === 'mark.layouts.side-menu') {
+            $view = 'mark.tags.edit-side-menu';
         }
 
-        return $response->withJson([
-            'data' => $tag
+        return $this->render($response, $request, $view, [
+            'title' => 'Edit Tag',
+            'tag' => $tag,
+            'languages' => $languages
         ]);
     }
 
     public function update(Request $request, Response $response, array $args): Response
     {
-        $tag = Tag::find($args['id']);
-        
-        if (!$tag) {
-            return $response->withStatus(404)->withJson([
-                'error' => 'Tag not found'
-            ]);
-        }
-
+        $tag = Tag::findOrFail($args['id']);
         $data = $request->getParsedBody();
 
-        if (isset($data['slug'])) {
-            $tag->update(['slug' => $data['slug']]);
-        }
+        // Update tag
+        $tag->update([
+            'slug' => $this->createSlug($data['name_en'], $tag->id)
+        ]);
 
-        if (isset($data['translations'])) {
-            foreach ($data['translations'] as $translation) {
-                $tag->translations()
-                    ->updateOrCreate(
-                        ['locale' => $translation['locale']],
-                        ['name' => $translation['name']]
-                    );
+        // Update translations
+        foreach (['en', 'sk', 'cs'] as $locale) {
+            if (!empty($data["name_{$locale}"])) {
+                $tag->translations()->updateOrCreate(
+                    ['locale' => $locale],
+                    ['name' => $data["name_{$locale}"]]
+                );
             }
         }
 
-        return $response->withJson([
-            'data' => $tag->load('translations')
-        ]);
+        // Redirect to tags list
+        return $response
+            ->withHeader('Location', '/mark/tags')
+            ->withStatus(302);
     }
 
     public function delete(Request $request, Response $response, array $args): Response
     {
-        $tag = Tag::find($args['id']);
-        
-        if (!$tag) {
-            return $response->withStatus(404)->withJson([
-                'error' => 'Tag not found'
-            ]);
+        $tag = Tag::findOrFail($args['id']);
+
+        // Check if tag has articles
+        if ($tag->articles()->count() > 0) {
+            // Set flash message
+            $_SESSION['flash'] = [
+                'type' => 'error',
+                'message' => 'Cannot delete tag with articles. Remove articles first.'
+            ];
+
+            // Redirect back to tags list
+            return $response
+                ->withHeader('Location', '/mark/tags')
+                ->withStatus(302);
         }
 
+        // Delete tag (will also delete translations due to cascade delete in model)
         $tag->delete();
 
-        return $response->withStatus(204);
+        // Set flash message
+        $_SESSION['flash'] = [
+            'type' => 'success',
+            'message' => 'Tag deleted successfully.'
+        ];
+
+        // Redirect to tags list
+        return $response
+            ->withHeader('Location', '/mark/tags')
+            ->withStatus(302);
+    }
+
+    private function createSlug(string $name, int $excludeId = null): string
+    {
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+        $originalSlug = $slug;
+        $count = 1;
+
+        $query = Tag::where('slug', $slug);
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        while ($query->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+            $query = Tag::where('slug', $slug);
+            if ($excludeId) {
+                $query->where('id', '!=', $excludeId);
+            }
+        }
+
+        return $slug;
     }
 }

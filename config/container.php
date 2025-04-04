@@ -27,8 +27,51 @@ return [
         return $container->get(BladeService::class);
     },
 
+    // Content services
+    \App\Services\MarkdownParser::class => function (ContainerInterface $container) {
+        return new \App\Services\MarkdownParser();
+    },
+
+    \App\Services\ContentService::class => function (ContainerInterface $container) {
+        $contentConfig = require __DIR__ . '/content.php';
+        return new \App\Services\ContentService(
+            $contentConfig['content_path'],
+            $container->get(\App\Services\MarkdownParser::class)
+        );
+    },
+
+    \App\Services\FileManager::class => function (ContainerInterface $container) {
+        return new \App\Services\FileManager();
+    },
+
+    \App\Services\AIContentGenerator::class => function (ContainerInterface $container) {
+        return new \App\Services\AIContentGenerator();
+    },
+
+    \App\Controllers\Mark\ContentMarkController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\ContentMarkController(
+            $container,
+            $container->get(\App\Services\ContentService::class),
+            $container->get(\App\Services\FileManager::class)
+        );
+    },
+
+    \App\Controllers\Mark\AIContentController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\Mark\AIContentController($container);
+    },
+
     \App\Services\ArticleLinkService::class => function (ContainerInterface $container) {
         return new \App\Services\ArticleLinkService();
+    },
+
+    \App\Services\SearchIndexService::class => function (ContainerInterface $container) {
+        return new \App\Services\SearchIndexService();
+    },
+
+    \App\Services\SearchService::class => function (ContainerInterface $container) {
+        return new \App\Services\SearchService(
+            $container->get(\App\Services\SearchIndexService::class)
+        );
     },
 
     \App\Services\DatabaseInitializerService::class => function (ContainerInterface $container) {
@@ -147,5 +190,12 @@ return [
 
     \App\Controllers\Mark\SettingsController::class => function (ContainerInterface $container) {
         return new \App\Controllers\Mark\SettingsController($container);
+    },
+
+    \App\Controllers\SearchController::class => function (ContainerInterface $container) {
+        return new \App\Controllers\SearchController(
+            $container,
+            $container->get(\App\Services\SearchService::class)
+        );
     },
 ];

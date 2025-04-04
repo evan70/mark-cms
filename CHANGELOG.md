@@ -95,6 +95,45 @@ a tento projekt dodržiava [Semantic Versioning](https://semver.org/spec/v2.0.0.
   - Aktualizovaný README.md s informáciami o inicializácii databázy a štruktúre projektu
   - Aktualizovaná dokumentácia o autorizácii s aktuálnymi cestami
   - Pridaná dokumentácia o layoutoch a ich používaní
+- Pridaná správa obsahu, kategórií a tagov do admin rozhrania (2025-04-03)
+  - Implementovaná správa obsahu pomocou Markdown súborov v adresári `content`
+  - Vytvorené služby `ContentService`, `MarkdownParser` a `FileManager` pre prácu s obsahom
+  - Vytvorený kontrolér `ContentMarkController` pre správu obsahu
+  - Pridaná registrácia služieb v konténeri
+  - Vytvorený konfiguračný súbor pre obsah
+  - Pridaná závislosť na balíku `league/commonmark` pre parsovanie Markdown
+  - Pridaná závislosť na balíku `symfony/yaml` pre parsovanie YAML
+  - Opravené volanie rodičovského konštruktora v `ContentMarkController`
+  - Pridaná registrácia `ContentMarkController` v konténeri
+  - Implementovaná adresárová štruktúra pre obsah podľa vzoru PicoCMS
+  - Upravené služby a kontroléry pre prácu s adresárovou štruktúrou
+  - Upravené šablóny pre zobrazenie adresárovej štruktúry
+  - Pridaný výber existujúcich kategórií vo formulári pre vytvorenie a úpravu článku (2025-04-04)
+  - Opravené získavanie cesty k adresáru s obsahom
+  - Pridané hardcoded kategórie pre testovanie
+  - Pridané debug výpisy pre lepšiu diagnostiku
+  - Upravené šablóny pre side-menu layout
+  - Zabezpečené, že vždy budú k dispozícii aspoň nejaké kategórie
+
+- Implementované automatické generovanie obsahu pomocou AI (2025-04-05)
+  - Pridaná integrácia s OpenAI API
+  - Vytvorená služba `AIContentGenerator` pre generovanie obsahu pomocou AI
+  - Vytvorený kontrolér `AIContentController` pre generovanie obsahu
+  - Vytvorené šablóny pre generovanie obsahu
+  - Pridaná možnosť použiť vygenerovaný obsah pri vytváraní nového článku
+  - Opravené spracovanie JSON odpovede z API
+  - Pridané lepšie ošetrenie chýb
+  - Opravená CSRF ochrana pri generovaní obsahu
+  - Opravená redeklarácia premennej formData v JavaScript kóde
+  - Opravené získavanie CSRF tokenu z formulára
+  - Zmenený spôsob odosielania formulára z AJAX na tradičný formulár
+  - Pridaný falošný generátor obsahu pre použitie bez OpenAI API
+  - Implementovaný výber medzi rôznymi generátormi obsahu (OpenAI, Deepseek, Fake Generator)
+  - Vytvorené rozhranie ContentGeneratorInterface pre jednotný prístup ku generátorom obsahu
+  - Pridaná továrenská trieda ContentGeneratorFactory pre vytváranie generátorov obsahu
+  - Vytvorené šablóny pre správu obsahu
+  - Pridané cesty pre správu obsahu
+  - Aktualizovaná navigácia v admin rozhraní
 
 ### Autorizácia
 

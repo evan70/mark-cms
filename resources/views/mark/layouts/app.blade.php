@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Mark CMS' }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+
     <link href="/css/app.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -20,6 +26,14 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <a href="/mark" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Dashboard</a>
+
+                                <!-- Content Management -->
+                                <a href="/mark/content" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Content</a>
+                                <a href="/mark/categories" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/categories*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Categories</a>
+                                <a href="/mark/tags" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/tags*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Tags</a>
+                                <a href="/mark/ai-content" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/ai-content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">AI Content</a>
+
+                                <!-- User Management -->
                                 <a href="/mark/users" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/users*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Users</a>
                                 <a href="/mark/mark-users" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->is('mark/mark-users*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Mark Users</a>
                             </div>
@@ -60,6 +74,14 @@
             <div class="md:hidden" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                     <a href="/mark" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Dashboard</a>
+
+                    <!-- Content Management -->
+                    <a href="/mark/content" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Content</a>
+                    <a href="/mark/categories" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/categories*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Categories</a>
+                    <a href="/mark/tags" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/tags*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Tags</a>
+                    <a href="/mark/ai-content" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/ai-content*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">AI Content</a>
+
+                    <!-- User Management -->
                     <a href="/mark/users" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/users*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Users</a>
                     <a href="/mark/mark-users" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->is('mark/mark-users*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">Mark Users</a>
                 </div>

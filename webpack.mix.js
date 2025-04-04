@@ -2,14 +2,18 @@ const mix = require('laravel-mix');
 const webpack = require('webpack');
 
 mix.setPublicPath('public')
-   .js('resources/js/app.js', 'public/js')
-   .js('resources/js/animations.js', 'public/js')
-   .postCss('resources/css/app.css', 'public/css', [
+   .js('resources/assets/js/app.js', 'public/js')
+   .js('resources/assets/js/animations.js', 'public/js')
+   .postCss('resources/assets/css/app.css', 'public/css', [
        require('tailwindcss'),
        require('autoprefixer'),
    ])
    // Copy images
-   .copyDirectory('resources/images', 'public/images')
+   .copyDirectory('resources/assets/images', 'public/images')
+   // Copy favicon
+   .copyDirectory('resources/assets/favicon', 'public/assets/favicon')
+   // Copy fonts
+   .copyDirectory('resources/assets/fonts', 'public/fonts')
    .version();
 
 // Disable manifest generation in development

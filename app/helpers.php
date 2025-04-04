@@ -18,7 +18,18 @@ if (!function_exists('url')) {
      */
     function url(string $path = '', array $params = []): string
     {
-        $baseUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost', '/');
+        // Get the current URL scheme and host
+        $scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+
+        // Use current URL as base URL if available, otherwise fall back to APP_URL
+        $baseUrl = $scheme . '://' . $host;
+
+        // Fall back to APP_URL if we couldn't determine the current URL
+        if ($baseUrl === 'http://localhost') {
+            $baseUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost', '/');
+        }
+
         $path = ltrim($path, '/');
 
         $url = $baseUrl . '/' . $path;
@@ -130,6 +141,10 @@ if (!function_exists('asset')) {
         try {
             return mix($path);
         } catch (Exception $e) {
+            // Check if the path starts with 'images/'
+            if (strpos($path, 'images/') === 0) {
+                return '/' . ltrim($path, '/');
+            }
             return '/assets/' . ltrim($path, '/');
         }
     }

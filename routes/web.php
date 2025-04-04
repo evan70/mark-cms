@@ -6,6 +6,7 @@ use Slim\Routing\RouteCollectorProxy;
 use App\Controllers\ArticleController;
 use App\Controllers\HomeController;
 use App\Controllers\CategoryController;
+use App\Controllers\SearchController;
 
 return function (App $app) {
     // Root route - použije default language (sk)
@@ -31,6 +32,10 @@ return function (App $app) {
 
         $group->get('/articles', [ArticleController::class, 'index'])
               ->setName('article.index');
+
+        // Search
+        $group->get('/search', [SearchController::class, 'index'])
+              ->setName('search.index');
 
     })->add(\App\Middleware\LanguageMiddleware::class);
 

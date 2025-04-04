@@ -1,14 +1,17 @@
 {
-    "/js/app.js": "/js/app.js?id=ac0939f7258e6418dc6b41e1ecc50415",
+    "/js/app.js": "/js/app.js?id=718e3805de8e47389a1cac5a0a086763",
     "/js/animations.js": "/js/animations.js?id=f719d6565fd4ea7ec5e6483348d47ec9",
-    "/css/app.css": "/css/app.css?id=a2a7391dccc7f2838df8625ed4cf8269",
-    "/images/flags/cs.svg": "/images/flags/cs.svg?id=7c35e29ac2ab0567177b9588d928ca72",
-    "/images/flags/en.svg": "/images/flags/en.svg?id=6561818128ba5954e822ed43427400fa",
-    "/images/flags/sk.svg": "/images/flags/sk.svg?id=b855f0da47a3b8abb7951e9f56019a9f",
+    "/css/app.css": "/css/app.css?id=467e88e9825db57dd45b2051e3b414ad",
+    "/images/flags/cs.svg": "/images/flags/cs.svg?id=8ffb243fd5351444af894f75415fbf16",
+    "/images/flags/en.svg": "/images/flags/en.svg?id=6dcadf6916764560c2f1fec586e2c1de",
+    "/images/flags/sk.svg": "/images/flags/sk.svg?id=0912f7d52f38198bf50e5e79f1fbdbb4",
     "/images/tech/aws.svg": "/images/tech/aws.svg?id=2845faff0e2e72ec10e670aaef905544",
     "/images/tech/docker.svg": "/images/tech/docker.svg?id=54c1af3bdc748125ec419c35ba93dde4",
     "/images/tech/laravel.svg": "/images/tech/laravel.svg?id=80d33b0aa92d68802e80364df8e3e6a3",
     "/images/tech/node.svg": "/images/tech/node.svg?id=a8b55968a823d135b7e1f22aea2ad33d",
     "/images/tech/react.svg": "/images/tech/react.svg?id=017463640aa0fa60e3688c8db617aa1f",
-    "/images/tech/vue.svg": "/images/tech/vue.svg?id=1a49d8d9f64f6a6223b6f116625178a0"
+    "/images/tech/vue.svg": "/images/tech/vue.svg?id=1a49d8d9f64f6a6223b6f116625178a0",
+    "/assets/favicon/favicon-16x16.png": "/assets/favicon/favicon-16x16.png?id=e868b924eafd044b4c62682c09bb7ab0",
+    "/assets/favicon/favicon-32x32.png": "/assets/favicon/favicon-32x32.png?id=4957269a76216167778e4339dd8b5359",
+    "/assets/favicon/favicon.ico": "/assets/favicon/favicon.ico?id=544c0417cf7481ee7173d800cefb545d"
 }

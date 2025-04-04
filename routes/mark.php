@@ -7,6 +7,10 @@ use App\Controllers\Mark\AuthController;
 use App\Controllers\Mark\UserController;
 use App\Controllers\Mark\MarkUserController;
 use App\Controllers\Mark\SettingsController;
+use App\Controllers\Mark\CategoryController;
+use App\Controllers\Mark\TagController;
+use App\Controllers\Mark\ContentMarkController;
+use App\Controllers\Mark\AIContentController;
 use App\Middleware\AdminAuthMiddleware;
 use App\Middleware\MarkAuthMiddleware;
 use Slim\Routing\RouteCollectorProxy;
@@ -28,14 +32,40 @@ return function (App $app) {
 
         // Logout route is defined outside of the protected group
 
-        // Articles management
-        $group->group('/articles', function (RouteCollectorProxy $group) {
-            $group->get('', [ArticleController::class, 'index'])->setName('mark.articles.index');
-            $group->get('/create', [ArticleController::class, 'create'])->setName('mark.articles.create');
-            $group->post('', [ArticleController::class, 'store'])->setName('mark.articles.store');
-            $group->get('/{id}/edit', [ArticleController::class, 'edit'])->setName('mark.articles.edit');
-            $group->put('/{id}', [ArticleController::class, 'update'])->setName('mark.articles.update');
-            $group->delete('/{id}', [ArticleController::class, 'delete'])->setName('mark.articles.delete');
+        // Content management (Markdown files)
+        $group->group('/content', function (RouteCollectorProxy $group) {
+            $group->get('', [ContentMarkController::class, 'index'])->setName('mark.content.index');
+            $group->get('/create', [ContentMarkController::class, 'create'])->setName('mark.content.create');
+            $group->post('/create', [ContentMarkController::class, 'store'])->setName('mark.content.store');
+            $group->get('/{filename}/edit', [ContentMarkController::class, 'edit'])->setName('mark.content.edit');
+            $group->post('/{filename}/edit', [ContentMarkController::class, 'update'])->setName('mark.content.update');
+            $group->get('/{filename}/delete', [ContentMarkController::class, 'delete'])->setName('mark.content.delete');
+        });
+
+        // AI Content Generator
+        $group->group('/ai-content', function (RouteCollectorProxy $group) {
+            $group->get('', [AIContentController::class, 'index'])->setName('mark.ai-content.index');
+            $group->post('/generate', [AIContentController::class, 'generate'])->setName('mark.ai-content.generate');
+        });
+
+        // Categories management
+        $group->group('/categories', function (RouteCollectorProxy $group) {
+            $group->get('', [CategoryController::class, 'index'])->setName('mark.categories.index');
+            $group->get('/create', [CategoryController::class, 'create'])->setName('mark.categories.create');
+            $group->post('/create', [CategoryController::class, 'store'])->setName('mark.categories.store');
+            $group->get('/{id}/edit', [CategoryController::class, 'edit'])->setName('mark.categories.edit');
+            $group->post('/{id}/edit', [CategoryController::class, 'update'])->setName('mark.categories.update');
+            $group->get('/{id}/delete', [CategoryController::class, 'delete'])->setName('mark.categories.delete');
+        });
+
+        // Tags management
+        $group->group('/tags', function (RouteCollectorProxy $group) {
+            $group->get('', [TagController::class, 'index'])->setName('mark.tags.index');
+            $group->get('/create', [TagController::class, 'create'])->setName('mark.tags.create');
+            $group->post('/create', [TagController::class, 'store'])->setName('mark.tags.store');
+            $group->get('/{id}/edit', [TagController::class, 'edit'])->setName('mark.tags.edit');
+            $group->post('/{id}/edit', [TagController::class, 'update'])->setName('mark.tags.update');
+            $group->get('/{id}/delete', [TagController::class, 'delete'])->setName('mark.tags.delete');
         });
 
         // Regular users management
