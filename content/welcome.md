@@ -1,14 +1,18 @@
 ---
-title: Welcome to Our Website
+title: 'Welcome to Our Website'
 slug: welcome
-date: 2023-04-05
+date: '2025-10-06'
 author: Admin
-categories: [general]
-tags: [welcome, introduction]
-featured_image: /images/welcome.jpg
-excerpt: Welcome to our website! This is a sample article to demonstrate the Markdown content system.
+categories:
+    - blog/lifestyle
+tags:
+    - welcome
+    - '     introduction'
+featured_image: /uploads/images/adbdc1896f135a84.jpg
+excerpt: 'Welcome to our website! This is a sample article to demonstrate the Markdown content system.'
 status: published
-language: sk
+language: cs
+is_index: false
 ---
 
 # Welcome to Our Website

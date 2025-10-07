@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Article extends Model
 {
     protected $fillable = [
-        'slug',
         'featured_image',
         'is_published',
         'published_at'

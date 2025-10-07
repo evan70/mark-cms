@@ -1,3 +1,21 @@
+---
+title: 'Markdown prievodca'
+slug: markdown-handbook
+date: '2025-10-07'
+author: 'Evan McDan'
+categories:
+    - blog
+    - blog/technology/ai
+tags:
+    - taa
+    - ' mee'
+featured_image: /uploads/images/73cb999eab8c1d75.jpg
+excerpt: "Markdown is a lightweight markup language that you can use to add formatting elements to plaintext text documents. Created by John Gruber in 2004, Markdown is now one of the world's most popular markup languages."
+status: published
+language: sk
+is_index: false
+---
+
 # Markdown Guide
 
 Markdown is a lightweight markup language that you can use to add formatting elements to plaintext text documents. Created by John Gruber in 2004, Markdown is now one of the world's most popular markup languages.

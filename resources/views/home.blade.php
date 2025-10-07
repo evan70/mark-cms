@@ -7,7 +7,7 @@
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
             <div class="md:w-1/2 mb-10 md:mb-0">
                 <h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-                    Vytvárame digitálne<br>riešenia budúcnosti
+                Digitálne<br>riešenia budúcnosti ...
                 </h1>
                 <p class="text-xl text-gray-250 mb-8">
                     Špecializujeme sa na vývoj moderných webových aplikácií a mobilných riešení s dôrazom na výkon a používateľský zážitok.

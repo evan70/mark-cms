@@ -6,33 +6,27 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Services\BladeService;
+use App\Services\MetaService;
 
 abstract class BaseController
 {
     protected $container;
     protected $blade;
+    protected $metaService;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->blade = $container->get(BladeService::class);
+        $this->metaService = $container->get(MetaService::class);
     }
 
     protected function render(Response $response, Request $request, string $template, array $data = []): Response
     {
         $baseUrl = rtrim($_ENV['APP_URL'], '/');
 
-        // Add meta description and keywords if not provided
-        if (!isset($data['metaDescription']) && isset($data['title'])) {
-            $data['metaDescription'] = $data['title'] . ' - ' . config('app.description');
-        }
-
-        if (!isset($data['metaKeywords']) && isset($data['title'])) {
-            // Add title keywords to default keywords
-            $titleWords = preg_replace('/[^a-zA-Z0-9\s]/', '', $data['title']);
-            $titleKeywords = strtolower(str_replace(' ', ', ', $titleWords));
-            $data['metaKeywords'] = $titleKeywords . ', ' . config('app.meta_keywords');
-        }
+        // Generate meta data
+        $data = $this->metaService->generateMeta($data);
 
         // Merge base data with provided data
         $viewData = array_merge([

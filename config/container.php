@@ -75,6 +75,10 @@ return [
         return new \App\Services\ArticleLinkService();
     },
 
+    \App\Services\MetaService::class => function (ContainerInterface $container) {
+        return new \App\Services\MetaService();
+    },
+
     \App\Services\SearchIndexService::class => function (ContainerInterface $container) {
         return new \App\Services\SearchIndexService();
     },

@@ -17,7 +17,8 @@
                 <a href="/{{ $language }}/categories" class="nav-link">
                     {{ __('Categories') }}
                 </a>
-
+                <!-- Search Form -->
+                @include('components.search-form')
                 <!-- Language Switcher -->
                 @include('components.language-switcher')
             </div>

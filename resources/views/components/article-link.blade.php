@@ -24,7 +24,7 @@
     $cssClass = $class ?? '';
 @endphp
 
-<a href="/{{ $language }}/article/{{ $article->slug }}"
+<a href="/{{ $language }}/article/{{ $translation->slug }}"
    class="{{ $cssClass }}"
    title="{{ $title }}"
    aria-label="{{ __('Read article') }}: {{ $title }}">

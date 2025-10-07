@@ -1,12 +1,17 @@
 ---
-title: 'Ako to bolo'
+title: 'Ako to bolo ?'
 slug: ako-to-bolo
-date: '2025-04-04'
+date: '2025-10-06'
 author: 'Evan McDan'
-categories: {  }
-tags: {  }
-featured_image: /uploads/images/181697f3c2fe7457.png
-excerpt: ''
+categories:
+    - blog/technology
+    - blog/technology/ai
+tags:
+    - test
+    - tag
+    - php
+featured_image: /uploads/images/649404a14aad96bc.jpg
+excerpt: "Introducing the revolutionary kava kolumbia supremo - designed to transform the way you work and live. This cutting-edge product combines innovative technology with sleek design to deliver an unparalleled user experience.\r\n"
 status: published
 language: sk
 is_index: false

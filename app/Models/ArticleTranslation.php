@@ -10,6 +10,7 @@ class ArticleTranslation extends Model
     protected $fillable = [
         'article_id',
         'locale',
+        'slug',
         'title',
         'perex',
         'content',

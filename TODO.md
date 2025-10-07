@@ -1,0 +1,4 @@
+- [x] Create MetaService class in app/Services/MetaService.php
+- [x] Add MetaService to container.php
+- [x] Update BaseController to inject and use MetaService
+- [ ] Test the changes by running the app

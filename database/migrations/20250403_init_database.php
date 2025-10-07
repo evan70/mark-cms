@@ -129,7 +129,6 @@ class InitDatabase
     {
         Capsule::schema()->create('articles', function ($table) {
             $table->id();
-            $table->string('slug')->unique();
             $table->string('featured_image')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
@@ -141,13 +140,13 @@ class InitDatabase
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->string('locale', 5);
+            $table->string('slug')->unique();
             $table->string('title');
             $table->text('perex')->nullable();
             $table->text('content');
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->timestamps();
-
             $table->unique(['article_id', 'locale']);
             $table->index('locale');
         });

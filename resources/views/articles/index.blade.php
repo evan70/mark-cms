@@ -17,7 +17,7 @@
                 <div class="p-6">
                     <h2 class="text-xl font-semibold mb-2">{{ $translation->title }}</h2>
                     <p class="text-gray-250 mb-4">{{ str_limit($translation->perex, 150) }}</p>
-                    <a href="/{{ $language }}/article/{{ $article->slug }}"
+                    <a href="/{{ $language }}/article/{{ $translation->slug }}"
                        class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-colors">
                         {{ __('Read More') }}
                     </a>
