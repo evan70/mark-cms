@@ -5,7 +5,7 @@ mix.setPublicPath('public')
    .js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/animations.js', 'public/js')
    .postCss('resources/assets/css/app.css', 'public/css', [
-       require('tailwindcss'),
+       require('@tailwindcss/postcss'),
        require('autoprefixer'),
    ])
    // Copy images
