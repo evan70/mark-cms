@@ -36,21 +36,26 @@ class ArticleController extends BaseController
             $article = Article::with(['translations' => function($query) use ($language) {
                 $query->where('locale', $language);
             }])
-            ->where('slug', $slug)
+            ->whereHas('translations', function($query) use ($language, $slug) {
+                $query->where('locale', $language)
+                      ->where('slug', $slug);
+            })
             ->where('is_published', true)
             ->where('published_at', '<=', Carbon::now())
             ->firstOrFail();
 
             $translation = $article->translations->first();
-            $title = $translation->title ?? 'Article';
-            $metaDescription = $translation->meta_description ?? $translation->perex ?? '';
+            $title = $translation?->title ?? 'Article';
+            $metaDescription = $translation?->meta_description ?? $translation?->perex ?? '';
+            $content = $translation ? $this->container->get(\App\Services\MarkdownParser::class)->parse($translation->content)['content'] : '';
 
             return $this->render($response, $request, 'articles.detail', [
                 'article' => $article,
                 'language' => $language,
                 'title' => $title,
                 'metaDescription' => $metaDescription,
-                'metaKeywords' => $translation->meta_keywords ?? ''
+                'metaKeywords' => $translation?->meta_keywords ?? '',
+                'content' => $content
             ]);
         } catch (\Exception $e) {
             throw new \Slim\Exception\HttpNotFoundException($request);

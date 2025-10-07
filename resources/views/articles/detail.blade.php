@@ -5,11 +5,11 @@
     <article class="max-w-4xl mx-auto">
         @if($article->featured_image)
             <img src="{{ $article->featured_image }}"
-                 alt="{{ $article->translations->first()->title }}"
+                 alt="{{ $article->translations->first()?->title }}"
                  class="w-full h-64 md:h-96 object-cover rounded-lg mb-8">
         @endif
 
-        <h1 class="text-4xl font-bold mb-4">{{ $article->translations->first()->title }}</h1>
+        <h1 class="text-4xl font-bold mb-4">{{ $article->translations->first()?->title }}</h1>
 
         <div class="text-gray-250 mb-8">
             <time datetime="{{ $article->published_at }}">
@@ -18,7 +18,7 @@
         </div>
 
         <div class="prose prose-lg prose-invert max-w-none">
-            {!! $article->translations->first()->content !!}
+            {!! $content !!}
         </div>
     </article>
 </div>

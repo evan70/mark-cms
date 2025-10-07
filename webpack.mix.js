@@ -12,8 +12,6 @@ mix.setPublicPath('public')
    .copyDirectory('resources/assets/images', 'public/images')
    // Copy favicon
    .copyDirectory('resources/assets/favicon', 'public/assets/favicon')
-   // Copy fonts
-   .copyDirectory('resources/assets/fonts', 'public/fonts')
    .version();
 
 // Disable manifest generation in development
