@@ -14,6 +14,22 @@ return function (App $app) {
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home');
 
+    // Routes for default language (without language prefix)
+    $app->get('/categories', [CategoryController::class, 'list'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/categories/{slug}', [CategoryController::class, 'detail'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/article/{slug}', [ArticleController::class, 'detail'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/articles', [ArticleController::class, 'index'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/search', [SearchController::class, 'index'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/content', [ContentController::class, 'index'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+    $app->get('/content/{slug}', [ContentController::class, 'show'])
+        ->add(\App\Middleware\LanguageMiddleware::class);
+
     // Language group
     $app->group('/{lang:[a-z]{2}}', function (RouteCollectorProxy $group) {
         // Homepage with language

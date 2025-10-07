@@ -301,4 +301,18 @@ if (!function_exists('article_link')) {
     }
 }
 
+if (!function_exists('get_language_prefix')) {
+    /**
+     * Get the language prefix for URLs
+     *
+     * @param string $language The language code
+     * @return string The prefix (empty for default language)
+     */
+    function get_language_prefix($language)
+    {
+        $defaultLanguage = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
+        return $language === $defaultLanguage ? '' : '/' . $language;
+    }
+}
+
 

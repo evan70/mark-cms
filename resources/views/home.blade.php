@@ -13,10 +13,10 @@
                     Špecializujeme sa na vývoj moderných webových aplikácií a mobilných riešení s dôrazom na výkon a používateľský zážitok.
                 </p>
                 <div class="flex gap-4">
-                    <a href="/{{ $language }}/contact" class="btn-primary bg-purple-600 hover:bg-purple-700">
+                    <a href="{{ get_language_prefix($language) }}/contact" class="btn-primary bg-purple-600 hover:bg-purple-700">
                         Začnime spoluprácu
                     </a>
-                    <a href="/{{ $language }}/portfolio" class="btn-secondary border border-purple-600 hover:bg-purple-600/10">
+                    <a href="{{ get_language_prefix($language) }}/portfolio" class="btn-secondary border border-purple-600 hover:bg-purple-600/10">
                         Naše projekty
                     </a>
                 </div>
@@ -89,7 +89,7 @@ class ResponsiveSK {
             <div class="space-y-6">
                 <div class="flex items-center justify-between mb-8">
                 <h2 class="text-3xl font-bold">{{ __('Latest Articles') }}</h2>
-                    <a href="/{{ $language }}/articles"
+                    <a href="{{ get_language_prefix($language) }}/articles"
                        class="text-purple-400 hover:text-purple-300 flex items-center gap-2 group">
                         {{ __('View All') }}
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +130,7 @@ class ResponsiveSK {
                                         <span class="text-sm text-gray-150">
                                             {{ $article->published_at->format('d.m.Y') }}
                                         </span>
-                                        <a href="/{{ $language }}/article/{{ $article->slug }}"
+                                        <a href="{{ get_language_prefix($language) }}/article/{{ $article->slug }}"
                                            class="text-purple-400 hover:text-purple-300 text-sm flex items-center gap-1"
                                            title="{{ $translation->title }}"
                                            aria-label="{{ __('Read article') }}: {{ $translation->title }}">
@@ -151,7 +151,7 @@ class ResponsiveSK {
             <div class="space-y-6">
                 <div class="flex items-center justify-between mb-8">
                 <h2 class="text-3xl font-bold">{{ __('Categories') }}</h2>
-                    <a href="{{ $baseUrl }}/{{ $language }}/categories"
+                    <a href="{{ get_language_prefix($language) }}/categories"
                        class="text-purple-400 hover:text-purple-300 flex items-center gap-2 group">
                         {{ __('View All') }}
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +175,7 @@ class ResponsiveSK {
                                     </div>
                                     <div>
                                         <h3 class="text-xl font-bold mb-2 text-gray-100 hover:text-blue-400 transition-colors">
-                                            <a href="{{ $baseUrl }}/{{ $language }}/categories/{{ $category->slug }}">
+                                            <a href="{{ get_language_prefix($language) }}/categories/{{ $category->slug }}">
                                                 {{ $translation->name }}
                                             </a>
                                         </h3>
@@ -184,7 +184,7 @@ class ResponsiveSK {
                                                 {{ $translation->description }}
                                             </p>
                                         @endif
-                                        <a href="{{ $baseUrl }}/{{ $language }}/categories/{{ $category->slug }}"
+                                        <a href="{{ get_language_prefix($language) }}/categories/{{ $category->slug }}"
                                            class="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1">
                                             {{ __('Browse Category') }}
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -239,7 +239,7 @@ class ResponsiveSK {
             <p class="text-xl text-gray-250 mb-8 max-w-2xl mx-auto">
                 Poďme spoločne premeniť vaše nápady na realitu. Kontaktujte nás a my vám pomôžeme s realizáciou vášho projektu.
             </p>
-            <a href="/{{ $language }}/contact" class="btn-primary bg-purple-600 hover:bg-purple-700">
+            <a href="{{ get_language_prefix($language) }}/contact" class="btn-primary bg-purple-600 hover:bg-purple-700">
                 Kontaktujte nás
             </a>
         </div>

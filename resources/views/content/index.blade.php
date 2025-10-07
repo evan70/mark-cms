@@ -16,7 +16,7 @@
             <nav class="text-sm text-gray-350 mb-4">
                 <ol class="flex flex-wrap items-center">
                     <li>
-                        <a href="/{{ $language }}/content" class="hover:text-white">{{ __('Articles') }}</a>
+                        <a href="{{ get_language_prefix($language) }}/content" class="hover:text-white">{{ __('Articles') }}</a>
                     </li>
                     <li class="mx-2">/</li>
                     
@@ -35,7 +35,7 @@
                             @if($isLast)
                                 <span class="text-white">{{ ucfirst(str_replace('-', ' ', $part)) }}</span>
                             @else
-                                <a href="/{{ $language }}/content?category={{ $path }}" class="hover:text-white">
+                                <a href="{{ get_language_prefix($language) }}/content?category={{ $path }}" class="hover:text-white">
                                     {{ ucfirst(str_replace('-', ' ', $part)) }}
                                 </a>
                                 <span class="mx-2">/</span>
@@ -50,7 +50,7 @@
         @if(empty($articles))
             <div class="bg-gray-800 rounded-lg p-8 text-center">
                 <p class="text-gray-250 mb-4">{{ __('No articles found.') }}</p>
-                <a href="/{{ $language }}/content" class="text-purple-400 hover:text-purple-300">
+                <a href="{{ get_language_prefix($language) }}/content" class="text-purple-400 hover:text-purple-300">
                     {{ __('View all articles') }}
                 </a>
             </div>
@@ -66,7 +66,7 @@
                         
                         <div class="p-6">
                             <h2 class="text-xl font-bold mb-2">
-                                <a href="/{{ $language }}/content/{{ $article['slug'] }}{{ $category ? '?category=' . urlencode($category) : '' }}" 
+                                <a href="{{ get_language_prefix($language) }}/content/{{ $article['slug'] }}{{ $category ? '?category=' . urlencode($category) : '' }}"
                                    class="hover:text-purple-400 transition-colors">
                                     {{ $article['title'] ?? 'Untitled' }}
                                 </a>

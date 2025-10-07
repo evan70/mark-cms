@@ -43,13 +43,9 @@ class LanguageMiddleware
             return $handler->handle($request);
         }
 
-        // If language code is invalid but exists, redirect to default
+        // If language code is invalid but exists, set to default (no redirect)
         if ($lang && !in_array($lang, $this->availableLanguages)) {
-            $newUri = '/' . $this->defaultLanguage . substr($uri, strlen($lang) + 1);
-            $response = new Response();
-            return $response
-                ->withHeader('Location', $newUri)
-                ->withStatus(302);
+            $lang = $this->defaultLanguage;
         }
 
         // If no language is specified in the URL, use the default language

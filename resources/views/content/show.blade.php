@@ -28,7 +28,7 @@
                 @if(isset($article['category']))
                     <span>
                         {{ __('In') }}
-                        <a href="/{{ $language }}/content?category={{ $article['category'] }}"
+                        <a href="{{ get_language_prefix($language) }}/content?category={{ $article['category'] }}"
                            class="text-purple-400 hover:text-purple-300">
                             {{ ucfirst(str_replace('-', ' ', $article['category'])) }}
                         </a>
@@ -59,7 +59,7 @@
 
         <footer class="mt-12 pt-8 border-t border-gray-700">
             <div class="flex flex-wrap justify-between">
-                <a href="/{{ $language }}/content{{ $category ? '?category=' . urlencode($category) : '' }}"
+                <a href="{{ get_language_prefix($language) }}/content{{ $category ? '?category=' . urlencode($category) : '' }}"
                    class="inline-flex items-center text-purple-400 hover:text-purple-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />

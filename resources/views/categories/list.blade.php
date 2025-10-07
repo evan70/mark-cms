@@ -21,7 +21,7 @@
                                 {{ $translation->description }}
                             </p>
                         @endif
-                        <a href="{{ $baseUrl }}/{{ $language }}/categories/{{ $category->slug }}"
+                        <a href="{{ get_language_prefix($language) }}/categories/{{ $category->slug }}"
                            class="text-blue-400 hover:text-blue-300">
                             {{ __('View Category') }} →
                         </a>
