@@ -2,19 +2,19 @@
     <div class="container mx-auto px-4">
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
-            <a href="{{ get_language_prefix($language ?? 'en') }}" class="text-xl font-bold">
-                {{ config('app.name', 'Multilingual CMS') }}
+            <a href="/" class="nav-link text-xl font-bold">
+                {{ config('app.name', 'Mark CMS') }}
             </a>
 
             <!-- Main Navigation -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ get_language_prefix($language) }}" class="nav-link">
+                <a href="/" class="nav-link">
                     {{ __('Home') }}
                 </a>
-                <a href="{{ get_language_prefix($language) }}/articles" class="nav-link">
+                <a href="/articles" class="nav-link">
                     {{ __('Articles') }}
                 </a>
-                <a href="{{ get_language_prefix($language) }}/categories" class="nav-link">
+                <a href="/categories" class="nav-link">
                     {{ __('Categories') }}
                 </a>
                 <!-- Search Form -->
@@ -34,11 +34,14 @@
         <!-- Mobile Menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-900/50 backdrop-blur-sm rounded-lg mt-2">
-                <a href="{{ get_language_prefix($language) }}" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                <a href="/" class="block px-3 py-2 rounded-md hover:bg-gray-700">
                     {{ __('Home') }}
                 </a>
-                <a href="{{ get_language_prefix($language) }}/articles" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                <a href="/articles" class="block px-3 py-2 rounded-md hover:bg-gray-700">
                     {{ __('Articles') }}
+                </a>
+                <a href="/categories" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                    {{ __('Categories') }}
                 </a>
                 @include('components.language-switcher', ['isMobile' => true])
             </div>

@@ -1,4 +1,3 @@
-
 <?php
 
 use Slim\App;
@@ -14,20 +13,33 @@ return function (App $app) {
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home');
 
-    // Routes for default language (without language prefix)
+    // Routes for default language (without language prefix) - PŘIDAJTE SETNAME!
     $app->get('/categories', [CategoryController::class, 'list'])
+        ->setName('categories')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/categories/{slug}', [CategoryController::class, 'detail'])
+        ->setName('category.detail.default')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/article/{slug}', [ArticleController::class, 'detail'])
+        ->setName('article.detail.default')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/articles', [ArticleController::class, 'index'])
+        ->setName('articles')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/search', [SearchController::class, 'index'])
+        ->setName('search')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/content', [ContentController::class, 'index'])
+        ->setName('content.index.default')
         ->add(\App\Middleware\LanguageMiddleware::class);
+        
     $app->get('/content/{slug}', [ContentController::class, 'show'])
+        ->setName('content.show.default')
         ->add(\App\Middleware\LanguageMiddleware::class);
 
     // Language group

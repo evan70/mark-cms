@@ -135,7 +135,6 @@ return [
         // Articles
         'articles' => function ($table) {
             $table->id();
-            $table->string('slug')->unique();
             $table->string('featured_image')->nullable();
             $table->boolean('is_published')->default(false);
             $table->timestamp('published_at')->nullable();
@@ -149,6 +148,7 @@ return [
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->string('locale', 5);
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('perex')->nullable();
             $table->text('content');
             $table->string('meta_title')->nullable();

@@ -138,11 +138,6 @@ return [
     'csrf' => function (ContainerInterface $container) {
         $responseFactory = $container->get('response_factory');
 
-        // Make sure session is started
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
-
         // Create guard with minimal parameters
         $guard = new \Slim\Csrf\Guard($responseFactory);
 
