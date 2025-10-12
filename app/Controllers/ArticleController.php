@@ -3,12 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\Article;
+use App\Services\ArticleService;
 use Carbon\Carbon;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class ArticleController extends BaseController
 {
+    private ArticleService $articleService;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+        $this->articleService = $this->container->get(ArticleService::class);
+    }
     public function index(Request $request, Response $response): Response
     {
         $language = $request->getAttribute('language');
@@ -32,34 +41,13 @@ class ArticleController extends BaseController
         $language = $request->getAttribute('language');
         $slug = $args['slug'];
 
-        try {
-            $article = Article::with(['translations' => function($query) use ($language) {
-                $query->where('locale', $language);
-            }])
-            ->whereHas('translations', function($query) use ($language, $slug) {
-                $query->where('locale', $language)
-                      ->where('slug', $slug);
-            })
-            ->where('is_published', true)
-            ->where('published_at', '<=', Carbon::now())
-            ->firstOrFail();
+        $data = $this->articleService->getArticleData($slug, $language);
 
-            $translation = $article->translations->first();
-            $title = $translation?->title ?? 'Article';
-            $metaDescription = $translation?->meta_description ?? $translation?->perex ?? '';
-            $content = $translation ? $this->container->get(\App\Services\MarkdownParser::class)->parse($translation->content)['content'] : '';
-
-            return $this->render($response, $request, 'articles.detail', [
-                'article' => $article,
-                'language' => $language,
-                'title' => $title,
-                'metaDescription' => $metaDescription,
-                'metaKeywords' => $translation?->meta_keywords ?? '',
-                'content' => $content
-            ]);
-        } catch (\Exception $e) {
+        if (!$data) {
             throw new \Slim\Exception\HttpNotFoundException($request);
         }
+
+        return $this->render($response, $request, 'articles.detail', array_merge($data, ['language' => $language]));
     }
 
 

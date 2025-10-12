@@ -50,16 +50,7 @@ class ContentService
             $content = $file->getContents();
             $article = $this->markdownParser->parse($content);
 
-            // Set filename and path information
-            $article['filename'] = $file->getRelativePathname();
-            $article['path'] = $category ? $category . '/' . $file->getRelativePathname() : $file->getRelativePathname();
-            $article['directory'] = $file->getRelativePath();
-            $article['is_index'] = $file->getFilename() === 'index.md';
-
-            // Set category based on directory structure
-            if (!isset($article['category']) && $file->getRelativePath()) {
-                $article['category'] = str_replace('/', '-', $file->getRelativePath());
-            }
+            $this->setArticleMetadata($article, $file->getRelativePathname(), $file->getRelativePath(), $category);
 
             // Apply filters
             if (!empty($filters)) {
@@ -124,16 +115,7 @@ class ContentService
             $content = $file->getContents();
             $article = $this->markdownParser->parse($content);
 
-            // Set filename and path information
-            $article['filename'] = $file->getRelativePathname();
-            $article['path'] = $category ? $category . '/' . $file->getRelativePathname() : $file->getRelativePathname();
-            $article['directory'] = $file->getRelativePath();
-            $article['is_index'] = $file->getFilename() === 'index.md';
-
-            // Set category based on directory structure
-            if (!isset($article['category']) && $file->getRelativePath()) {
-                $article['category'] = str_replace('/', '-', $file->getRelativePath());
-            }
+            $this->setArticleMetadata($article, $file->getRelativePathname(), $file->getRelativePath(), $category);
 
             if (($article['slug'] ?? '') === $slug) {
                 return $article;
@@ -167,16 +149,7 @@ class ContentService
         $content = file_get_contents($path);
         $article = $this->markdownParser->parse($content);
 
-        // Set filename and path information
-        $article['filename'] = $filename;
-        $article['path'] = $category ? $category . '/' . $filename : $filename;
-        $article['directory'] = $category ?? '';
-        $article['is_index'] = basename($filename) === 'index.md';
-
-        // Set category based on directory structure
-        if (!isset($article['category']) && $category) {
-            $article['category'] = str_replace('/', '-', $category);
-        }
+        $this->setArticleMetadata($article, $filename, $category ?? '', $category);
 
         return $article;
     }
@@ -258,5 +231,26 @@ class ContentService
     private function generateSlug(string $title): string
     {
         return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
+    }
+
+    /**
+     * Set article metadata
+     *
+     * @param array $article
+     * @param string $filename
+     * @param string $directory
+     * @param string|null $category
+     * @return void
+     */
+    private function setArticleMetadata(array &$article, string $filename, string $directory, ?string $category): void
+    {
+        $article['filename'] = $filename;
+        $article['path'] = $category ? $category . '/' . $filename : $filename;
+        $article['directory'] = $directory;
+        $article['is_index'] = basename($filename) === 'index.md';
+
+        if (!isset($article['category']) && $directory) {
+            $article['category'] = str_replace('/', '-', $directory);
+        }
     }
 }

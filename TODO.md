@@ -12,3 +12,9 @@
 - [ ] Verify that /sk/articles also works
 - [ ] Verify that /en/articles works for English
 - [ ] Check for any remaining hardcoded /{{ $language }}/ links
+
+## Refactoring Tasks
+- [x] Create app/Services/ArticleService.php to handle article fetching and data preparation
+- [x] Refactor ArticleController.php detail method to use ArticleService
+- [x] Extract duplicated metadata setting logic in ContentService.php to a private setArticleMetadata method
+- [x] Test refactored code to ensure article functionality works correctly
