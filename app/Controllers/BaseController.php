@@ -28,6 +28,11 @@ abstract class BaseController
         // Generate meta data
         $data = $this->metaService->generateMeta($data);
 
+        // Share language globally for layout
+        if (isset($data['language'])) {
+            $this->blade->share('language', $data['language']);
+        }
+
         // Merge base data with provided data
         $viewData = array_merge([
             'baseUrl' => $baseUrl,

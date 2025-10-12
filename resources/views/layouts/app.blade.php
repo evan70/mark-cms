@@ -25,6 +25,9 @@
     @stack('styles')
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
+    @php
+        $currentLanguage = $language ?? $_SESSION['language'] ?? config('app.default_language');
+    @endphp
     <!-- Navigation -->
     @include('components.navigation')
 

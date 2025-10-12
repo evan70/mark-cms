@@ -8,12 +8,43 @@ use App\Controllers\CategoryController;
 use App\Controllers\SearchController;
 use App\Controllers\ContentController;
 
+// Language switch route
+$app->get('/switch-lang/{code}', function ($request, $response, $args) {
+    $code = $args['code'];
+    $available = explode(',', $_ENV['AVAILABLE_LANGUAGES'] ?? 'sk,en,cs');
+    $default = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
+
+    if (in_array($code, $available)) {
+        $_SESSION['language'] = $code;
+    }
+
+    $referer = $_SERVER['HTTP_REFERER'] ?? '/';
+    $parsed = parse_url($referer);
+    $currentPath = $parsed['path'] ?? '/';
+
+    // Remove existing language prefix
+    if (preg_match('/^\/(' . implode('|', $available) . ')/', $currentPath, $matches)) {
+        $currentPath = substr($currentPath, strlen($matches[0]));
+    }
+
+    // Remove trailing slash
+    $currentPath = rtrim($currentPath, '/');
+
+    if ($code === $default) {
+        $redirect = $currentPath ?: '/';
+    } else {
+        $redirect = '/' . $code . $currentPath;
+    }
+
+    return $response->withHeader('Location', $redirect)->withStatus(302);
+});
+
 return function (App $app) {
     // Root route - použije default language (sk)
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home');
 
-    // Routes for default language (without language prefix) - PŘIDAJTE SETNAME!
+    // Routes for default language (without language prefix) - PRIDAJTE SETNAME!
     $app->get('/categories', [CategoryController::class, 'list'])
         ->setName('categories')
         ->add(\App\Middleware\LanguageMiddleware::class);
@@ -46,6 +77,8 @@ return function (App $app) {
     $app->group('/{lang:[a-z]{2}}', function (RouteCollectorProxy $group) {
         // Homepage with language
         $group->get('', [HomeController::class, 'index'])
+              ->setName('home.lang');
+        $group->get('/', [HomeController::class, 'index'])
               ->setName('home.lang');
 
         // Categories

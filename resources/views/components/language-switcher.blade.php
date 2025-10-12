@@ -76,7 +76,7 @@
                 error_log('Language code: ' . $code);
             @endphp
             @if($code !== $currentLang)
-            <a href="/{{ $code }}"
+            <a href="/switch-lang/{{ $code }}"
                class="language-option flex items-center space-x-3 px-4 py-2 text-sm text-gray-150 hover:bg-gray-600"
                style="opacity: 0;">
                 <img src="/images/flags/{{ $code }}.svg"

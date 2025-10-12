@@ -68,6 +68,16 @@ if (!function_exists('request')) {
 
                 return (bool) preg_match('#^' . $pattern . '$#i', $path);
             }
+
+            /**
+             * Get the path info of the current request.
+             *
+             * @return string
+             */
+            public function getPathInfo(): string
+            {
+                return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
+            }
         };
     }
 }
@@ -178,6 +188,9 @@ if (!function_exists('request')) {
         return (object) [
             'query' => function () {
                 return $_GET;
+            },
+            'getPathInfo' => function () {
+                return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
             }
         ];
     }

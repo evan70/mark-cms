@@ -12,6 +12,11 @@
 - [ ] Verify that /sk/articles also works
 - [ ] Verify that /en/articles works for English
 - [ ] Check for any remaining hardcoded /{{ $language }}/ links
+- [x] Fix language switcher to redirect to current page instead of home
+- [x] Implement session-based language persistence with switch route
+- [x] Update navigation links to use current language prefix
+- [x] Share language variable globally in BaseController for layout access
+- [x] Fix Response constructor in LanguageMiddleware for redirects
 
 ## Refactoring Tasks
 - [x] Create app/Services/ArticleService.php to handle article fetching and data preparation
