@@ -33,7 +33,7 @@
     $title = $translation->title ?? 'Article';
 
     // Generate URL
-    $url = "/{$language}/article/{$article->slug}";
+    $url = get_language_prefix($language) . "/article/{$article->slug}";
 @endphp
 
 <div class="article-link-container">
