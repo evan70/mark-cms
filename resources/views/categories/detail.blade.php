@@ -35,7 +35,7 @@
                             </p>
                         @endif
                         <div class="flex justify-between items-center">
-                            <a href="{{ get_language_prefix($language) }}/article/{{ $article->slug }}"
+                            <a href="{{ get_language_prefix($language) }}/article/{{ $articleTranslation->slug }}"
                                class="text-blue-400 hover:text-blue-300">
                                 {{ __('Read More') }} →
                             </a>
