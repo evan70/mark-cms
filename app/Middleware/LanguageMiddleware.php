@@ -26,7 +26,8 @@ class LanguageMiddleware
             'css',
             'js',
             'images',
-            'fonts'
+            'fonts',
+            'switch-lang'
         ];
     }
 

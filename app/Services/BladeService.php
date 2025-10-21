@@ -62,6 +62,11 @@ class BladeService
         $this->factory->share($key, $value);
     }
 
+    public function getView(): Factory
+    {
+        return $this->factory;
+    }
+
     /**
      * Clear the view cache
      *

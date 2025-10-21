@@ -70,14 +70,19 @@ class AppBootstrap
         $authRoutes = require __DIR__ . '/../../routes/auth.php';
         $authRoutes($app);
 
+        $webRoutes = require __DIR__ . '/../../routes/web.php';
+        $webRoutes($app);
+
         $markRoutes = require __DIR__ . '/../../routes/mark.php';
         $markRoutes($app);
 
         $apiRoutes = require __DIR__ . '/../../routes/api.php';
         $apiRoutes($app);
 
-        $webRoutes = require __DIR__ . '/../../routes/web.php';
-        $webRoutes($app);
+        // Add wildcard route for 404 handling after all other routes
+        $app->any('{route:.*}', function ($request, $response) {
+            throw new \Slim\Exception\HttpNotFoundException($request);
+        });
 
         // Add final middleware
         $app->add(HtmlCompressorMiddleware::class);

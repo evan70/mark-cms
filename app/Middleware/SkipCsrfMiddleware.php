@@ -15,6 +15,7 @@ class SkipCsrfMiddleware
     protected $paths = [
         '/api/v1',  // Skip CSRF for API routes
         '/mark/api', // Skip CSRF for Mark API routes
+        '/switch-lang', // Skip CSRF for language switch
     ];
 
     /**
@@ -41,6 +42,8 @@ class SkipCsrfMiddleware
         if ($this->shouldSkipCsrf($uri)) {
             // Skip CSRF validation for whitelisted paths
             $request = $request->withAttribute('csrf_result', true);
+            // Also set a header to indicate CSRF should be skipped
+            $request = $request->withHeader('X-Skip-CSRF', 'true');
         }
 
         return $handler->handle($request);

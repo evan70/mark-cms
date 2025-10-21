@@ -239,6 +239,22 @@ if (!function_exists('csrf_token')) {
     }
 }
 
+if (!function_exists('csrf_field')) {
+    /**
+     * Generate a CSRF field for forms
+     *
+     * @return string HTML for CSRF field
+     */
+    function csrf_field(): string
+    {
+        $csrf = app()->getContainer()->get('csrf');
+        $nameKey = $csrf->getTokenNameKey();
+        $name = $csrf->getTokenName() ?? '';
+
+        return sprintf('<input type="hidden" name="%s" value="%s">', $nameKey, $name);
+    }
+}
+
 if (!function_exists('mix')) {
     function mix($path) {
         static $manifest;
@@ -325,6 +341,31 @@ if (!function_exists('get_language_prefix')) {
     {
         $defaultLanguage = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
         return $language === $defaultLanguage ? '' : '/' . $language;
+    }
+}
+
+if (!function_exists('slug')) {
+    /**
+     * Generate a URL-friendly slug from a string.
+     *
+     * @param string $string
+     * @return string
+     */
+    function slug($string)
+    {
+        // Convert to lowercase
+        $string = strtolower($string);
+
+        // Remove non-alphanumeric characters except spaces and hyphens
+        $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
+
+        // Replace spaces and multiple hyphens with single hyphen
+        $string = preg_replace('/[\s-]+/', '-', $string);
+
+        // Trim leading/trailing hyphens
+        $string = trim($string, '-');
+
+        return $string;
     }
 }
 

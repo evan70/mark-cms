@@ -18,5 +18,9 @@ class ViewProvider
 
         $bladeService = new BladeService($viewPaths, $cachePath);
         $container->set('view', $bladeService);
+
+        // Share CSRF token with views
+        $view = $bladeService->getView();
+        $view->share('csrf', $container->get('csrf'));
     }
 }
