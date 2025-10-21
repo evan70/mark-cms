@@ -40,8 +40,6 @@
             class="language-button flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-700 hover:bg-gray-600 transition-colors">
         @php
             $currentLang = $lang ?? $language ?? config('app.default_language', 'sk');
-            // Debug
-            error_log('Current language: ' . $currentLang);
         @endphp
         <img src="/images/flags/{{ $currentLang }}.svg"
              alt="{{ strtoupper($currentLang) }}"
@@ -71,19 +69,19 @@
          x-transition:leave-end="transform opacity-0 scale-95">
         <div class="py-1">
             @foreach(config('app.available_languages') as $code)
-            @php
-                // Debug
-                error_log('Language code: ' . $code);
-            @endphp
             @if($code !== $currentLang)
-            <a href="/switch-lang/{{ $code }}"
-               class="language-option flex items-center space-x-3 px-4 py-2 text-sm text-gray-150 hover:bg-gray-600"
-               style="opacity: 0;">
+            <form action="/switch-lang" method="POST" class="inline">
+                @csrf
+                <input type="hidden" name="code" value="{{ $code }}">
+                <button type="submit"
+                        class="language-option flex items-center space-x-3 px-4 py-2 text-sm text-gray-150 hover:bg-gray-600 w-full text-left"
+                        style="opacity: 0;">
                 <img src="/images/flags/{{ $code }}.svg"
                      alt="{{ strtoupper($code) }}"
                      class="w-5 h-5 flag-icon">
                 <span class="language-text">{{ strtoupper($code) }}</span>
-            </a>
+                </button>
+            </form>
             @endif
             @endforeach
         </div>
