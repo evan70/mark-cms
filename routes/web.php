@@ -8,38 +8,37 @@ use App\Controllers\CategoryController;
 use App\Controllers\SearchController;
 use App\Controllers\ContentController;
 
-// Language switch route
-$app->get('/switch-lang/{code}', function ($request, $response, $args) {
-    $code = $args['code'];
-    $available = explode(',', $_ENV['AVAILABLE_LANGUAGES'] ?? 'sk,en,cs');
-    $default = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
-
-    if (in_array($code, $available)) {
-        $_SESSION['language'] = $code;
-    }
-
-    $referer = $_SERVER['HTTP_REFERER'] ?? '/';
-    $parsed = parse_url($referer);
-    $currentPath = $parsed['path'] ?? '/';
-
-    // Remove existing language prefix
-    if (preg_match('/^\/(' . implode('|', $available) . ')/', $currentPath, $matches)) {
-        $currentPath = substr($currentPath, strlen($matches[0]));
-    }
-
-    // Remove trailing slash
-    $currentPath = rtrim($currentPath, '/');
-
-    if ($code === $default) {
-        $redirect = $currentPath ?: '/';
-    } else {
-        $redirect = '/' . $code . $currentPath;
-    }
-
-    return $response->withHeader('Location', $redirect)->withStatus(302);
-});
-
 return function (App $app) {
+    // Language switch route
+    $app->any('/switch-lang[/{code}]', function ($request, $response, $args) {
+        $code = $args['code'] ?? $request->getQueryParams()['code'] ?? $request->getParsedBody()['code'] ?? 'sk';
+        $available = explode(',', $_ENV['AVAILABLE_LANGUAGES'] ?? 'sk,en,cs');
+        $default = $_ENV['DEFAULT_LANGUAGE'] ?? 'sk';
+
+        if (in_array($code, $available)) {
+            $_SESSION['language'] = $code;
+        }
+
+        $referer = $_SERVER['HTTP_REFERER'] ?? '/';
+        $parsed = parse_url($referer);
+        $currentPath = $parsed['path'] ?? '/';
+
+        // Remove existing language prefix
+        if (preg_match('/^\/(' . implode('|', $available) . ')/', $currentPath, $matches)) {
+            $currentPath = substr($currentPath, strlen($matches[0]));
+        }
+
+        // Remove trailing slash
+        $currentPath = rtrim($currentPath, '/');
+
+        if ($code === $default) {
+            $redirect = $currentPath ?: '/';
+        } else {
+            $redirect = '/' . $code . $currentPath;
+        }
+
+        return $response->withHeader('Location', $redirect)->withStatus(302);
+    })->add(\App\Middleware\SkipCsrfMiddleware::class);
     // Root route - použije default language (sk)
     $app->get('/', [HomeController::class, 'index'])
         ->setName('home');
@@ -108,8 +107,5 @@ return function (App $app) {
 
     })->add(\App\Middleware\LanguageMiddleware::class);
 
-    // Wildcard route pre handling 404
-    $app->any('{route:.*}', function ($request, $response) {
-        throw new \Slim\Exception\HttpNotFoundException($request);
-    });
+
 };
