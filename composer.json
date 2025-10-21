@@ -41,5 +41,8 @@
         "allow-plugins": {
             "php-http/discovery": true
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.4"
     }
 }
